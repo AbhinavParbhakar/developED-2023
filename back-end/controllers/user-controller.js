@@ -1,9 +1,17 @@
 
+const User = require('../models/user-model');
 
 const getUserData = (req, res, next) => {
-    //retrieve a user info from database. (e.g. when they want to see their profile)'
-    res.send('In this request we will retrieve a user info from database. (e.g. when they want to see their profile)');
-    next();
+    const { id } = req.params;
+ 
+    User.getById(id, (error, data) => {
+        if (error) {
+            // Implement later
+        }
+        else {
+            res.json({ full_name: data });
+        }
+    })
 }
 
 const createUser = (req, res, next) => {
