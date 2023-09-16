@@ -15,19 +15,23 @@ const getUserData = (req, res, next) => {
 }
 
 const createUser = (req, res, next) => {
+    //send the registered user data to the database
+    const {f_name, l_name, b_day, email, password} = req.body
+
     res.send('In this request we will send the registered user data to the database')
 }
 
 const validateUser = (req, res, next) => {
-    // check if user matches witt db
+    // check if user matches with db
     const {email, password} = req.body
-    
+
 
 
 }
 
 const modifyUser = (req, res, next) => {
 //update the user information in the database
+
 }
 
 
