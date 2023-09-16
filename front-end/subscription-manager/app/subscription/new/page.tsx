@@ -13,8 +13,12 @@ export default function addSubscription(){
     }
 
     return(
-        <div className="w-100 flex justify-center">
-                <form className="flex form-control flex-col items-between justify-items-center max-w-lg">
+        <div className="flex justify-center h-screen items-center">
+                <form className="flex form-control w-100 shadow-2xl flex-col card p-10 bg-base-200 shadow">
+                    <label className="flex label">
+                        <h2 className="label-text">Company</h2>
+                    </label>
+                    <input type="text" className="input input-bordered input-primary " name="service" id="" />
                     <label className="flex label">
                         <h2 className="label-text">Subscription Name</h2>
                     </label>
@@ -47,7 +51,7 @@ export default function addSubscription(){
                     </div>
                     : <></> 
                     }
-                    <button type="submit" className="input input-bordered input-info mt-4" >Add Subscription</button>
+                    <button type="submit" className="btn-primary input input-bordered input-info mt-4" >Add Subscription</button>
                 </form>
         </div>
     )

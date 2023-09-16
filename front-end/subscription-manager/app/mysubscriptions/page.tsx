@@ -1,6 +1,6 @@
 export default function MySubscriptions() {
     return(
-        <div className="flex justify-center">
+        <div className="flex justify-center items-center h-screen">
             <div className="flex flex-col">
                 <div className="grid w-96 h-20 rounded bg-primary text-primary-content place-content-center">
                     Spotify
