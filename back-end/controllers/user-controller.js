@@ -12,6 +12,7 @@ const createUser = (req, res, next) => {
 const validateUser = (req, res, next) => {
     // check if user matches witt db
     const {email, password} = req.body
+    
 
 
 }
@@ -26,4 +27,6 @@ const modifyUser = (req, res, next) => {
 
 exports.getUserData = getUserData;
 exports.createUser = createUser;
+exports.validateUser = validateUser;
+exports.modifyUser = modifyUser;
 

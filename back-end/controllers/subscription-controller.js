@@ -3,3 +3,9 @@ const getSubscriptions  = (req, res, next) => {
 
 }
 
+const getSubscriptionDetails = (req, res, next) => {
+
+}
+
+exports.getSubscriptions = getSubscriptions;
+exports.getSubscriptionDetails = getSubscriptionDetails;
