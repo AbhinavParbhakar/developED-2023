@@ -70,8 +70,40 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (_binary '†`1T\æî­„\0)\Û\õ','Gabriel','Vasquez','gabo@gmail.com','abc','2002-01-25');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `users_pretty`
+--
+
+DROP TABLE IF EXISTS `users_pretty`;
+/*!50001 DROP VIEW IF EXISTS `users_pretty`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `users_pretty` AS SELECT 
+ 1 AS `BIN_TO_UUID(id)`,
+ 1 AS `full_name`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `users_pretty`
+--
+
+/*!50001 DROP VIEW IF EXISTS `users_pretty`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `users_pretty` AS select bin_to_uuid(`users`.`id`) AS `BIN_TO_UUID(id)`,concat(`users`.`f_name`,' ',`users`.`l_name`) AS `full_name` from `users` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -82,4 +114,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-16 16:01:56
+-- Dump completed on 2023-09-16 17:27:57
