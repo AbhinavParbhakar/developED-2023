@@ -48,11 +48,5 @@ const createSubscription = (req, res, next) => {
     })
 }
 
-<<<<<<< HEAD
-exports.getSubscriptions = getSubscriptions;
-exports.getSubscriptionInfo = getSubscriptionInfo;
-exports.createSubscription = createSubscription;
-=======
 exports.getAllSubscriptions = getAllSubscriptions;
 exports.getSubscriptionById = getSubscriptionById;
->>>>>>> refs/remotes/origin/back-end_dev
