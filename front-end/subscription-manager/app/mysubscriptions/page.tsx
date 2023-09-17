@@ -42,8 +42,10 @@ export default function MySubscriptions() {
         plan_type : 'weekly',
         plan_name : 'gay',
     }]
+    
 
-    const [searchParams,setSearchParams] = useState("")
+    const [searchParams,setSearchParams] = useState("") //search parameters
+    
 
     //use function Filter_callback to return if filter
     function filter_callback(data:Subscription){

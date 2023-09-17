@@ -29,7 +29,8 @@ function AddSubscription() {
   const handleSubmit = async (e : any) => {
     // You can perform actions with the form data here
     e.preventDefault();
-    const url = 'https://example.com/api/endpoint'; // Replace with your API endpoint URL
+    const url = 'https://esix.ca/user'; // Replace with your API endpoint URL
+    console.log(formData);
 
     try {
       const response = await fetch(url, {
