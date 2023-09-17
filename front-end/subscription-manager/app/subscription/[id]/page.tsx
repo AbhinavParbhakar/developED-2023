@@ -1,7 +1,7 @@
 import SubscriptionCard from "@/components/SubscriptionCard";
 import { Subscription } from "@/app/interfaces/interfaces";
 
-export default function subscriptionCardWrapper({ params,children }: { params: { id: string },children:string }){
+export default function subscriptionCardWrapper({ params}: { params: { id: string }}){
     const example : Subscription = {
         company : "Spotify",
         cost: 50.00,
@@ -14,7 +14,7 @@ export default function subscriptionCardWrapper({ params,children }: { params: {
 
     return (
         <div className="flex justify-center h-screen items-center w-full">
-            <SubscriptionCard input={example} color={children}/>
+            <SubscriptionCard input={example} color=""/>
         </div>
     )
 }
