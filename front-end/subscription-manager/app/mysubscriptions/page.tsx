@@ -1,6 +1,41 @@
-import Link from "next/link"
+import { Subscription } from "../interfaces/interfaces"
+import MySubscriptionCard from "@/components/MySubscriptionCard"
+
 
 export default function MySubscriptions() {
+    const fakeData : Array<Subscription> = [{
+        company : 'Spotify',
+        cost: 50.00,
+        id:"adfadsfadsf",
+        due_date: '08/25/2032',
+        start_date : '08/20/2021',
+        plan_type : 'weekly',
+        plan_name : 'Student Plan',
+    },{
+        company : 'Amazon Prime',
+        cost: 26.21,
+        id:"fjk23j4klja",
+        due_date: '05/25/2023',
+        start_date : '02/28/3202',
+        plan_type : 'biweekly',
+        plan_name : 'Music',
+    },
+    {
+        company : 'Netflix',
+        cost: 12.23,
+        id:"jk3l2jfklj3",
+        due_date: '05/13/2021',
+        start_date : '02/28/3202',
+        plan_type : 'monthly',
+        plan_name : 'Premium',
+    }]
+
+
+    //iteratively go through every styles
+    var style_index:number = 0
+    const styles : {[key:number]:string} = {0:"bg-accent",1:"bg-info",2:"bg-success",3:"bg-warning",4:"bg-error"}
+    const styles_length = 5
+
     return(
         <div className="flex justify-center items-center h-screen">
             <div className="flex flex-col space-y-4">
@@ -14,27 +49,11 @@ export default function MySubscriptions() {
                     <button className="absolute top-0 right-0 mt-2 mr-2">
                     </button>
                 </div>
-                <Link href="/spotify">
-                    <div className="grid w-96 rounded bg-success card grid-cols-2 gap-4 hover:p-6 hover:bg-opacity-75 p-3">
-                        <div className="col-span-2">Spotify</div>
-                        <div className="col-span-2 text-right">
-                            <p className="text-xs">$30/mo next payment: 8 days</p>
-                        </div>
-                    </div>
-                </Link>
-
-                <div className="grid w-96 rounded bg-error card grid-cols-2 gap-4 p-3 hover:p-6 shadow-2xl">
-                    <div className="col-span-2">Amazon Prime</div>
-                    <div className="col-span-2 text-right">
-                        <p className="text-xs">next payment: 8 days</p>
-                    </div>
-                </div>
-                <div className="grid w-96 rounded bg-accent card grid-cols-2 gap-4 p-3 hover:p-6 shadow-2xl">
-                    <div className="col-span-2">Hulu</div>
-                    <div className="col-span-2 text-right">
-                        <p className="text-xs">next payment: 8 days</p>
-                    </div>
-                </div>
+                {fakeData.map((subscription) => {
+                    let temp_index = style_index
+                    style_index += 1
+                    return <MySubscriptionCard service={subscription} color={styles[temp_index % styles_length]}></MySubscriptionCard>
+                })}
             </div>
         </div>
     )    
