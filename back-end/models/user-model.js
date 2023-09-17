@@ -28,14 +28,14 @@ User.getById = (id, handler) => {
 
 User.update = (id, updatedUser, handler) => {
     sql.query(
-        'UPDATE users SET f_name = ?, l_name = ?, email = ?, passwd = ?, b_day = ? WHERE id = ?',
-        [...updatedUser, id],
+        'UPDATE users SET f_name = ?, l_name = ?, email = ?, passwd = ?, b_day = ? WHERE id = UUID_TO_BIN(?)',
+        [...Object.values(updatedUser), id],
         (error, results) => {
             if (error) {
                 handler(error, null);
             }
             else {
-                handler(null, 'Profile updated succesfully.');
+                handler(null, null);
             }
         }
     );
@@ -52,7 +52,6 @@ User.create = (id, newUser, handler) => {
                 handler(error, null);
             }
             else {
-                console.log('OKKKKKKKk');
                 handler(null, null);
             }
         }

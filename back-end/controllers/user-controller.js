@@ -4,7 +4,7 @@ const User = require('../models/user-model');
 
 const getUserById = (req, res, next) => {
 
-    const { id } = req.params;
+    const { userId: id } = req.params;
     
     User.getById(id, (error, data) => {
         if (error) {
@@ -50,7 +50,7 @@ const validateUser = (req, res, next) => {
 
 const updateUser = (req, res, next) => {
 
-    const { id } = req.params;
+    const { userId: id } = req.params;
     const { f_name, l_name, email, passwd, b_day } = req.body;
 
     const updatedUser = new User({
