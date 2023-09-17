@@ -18,7 +18,7 @@ export default function MySubscriptions() {
                     <div className="grid w-96 rounded bg-success card grid-cols-2 gap-4 hover:p-6 hover:bg-opacity-75 p-3">
                         <div className="col-span-2">Spotify</div>
                         <div className="col-span-2 text-right">
-                            <p className="text-xs">next payment: 8 days</p>
+                            <p className="text-xs">$30/mo next payment: 8 days</p>
                         </div>
                     </div>
                 </Link>

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
           <div className="max-w-md">
             <h1 className="text-5xl font-bold">Welcome Back User</h1>
             <p className="py-6">Never forget your subscriptions again! Only pay for what you want!</p>
-            <button className="btn btn-primary mt-4">Add subscription</button>
+            <Link href="/subscription/new" className="btn btn-primary mt-4">Add subscription</Link>
           </div>
         </div>
       </div>

@@ -1,16 +1,16 @@
 'use client'
 import {useState} from 'react'
 
+const setOptions = (value : string) => {
+    if (value === "custom"){
+        console.log("Option changed")
+    }
+    console.log("function accessed")
+}
+
 export default function addSubscription(){
     const [optionState,setOptionState] = useState(false)
 
-    function setOptions(value : string){
-        if (value === "custom"){
-            setOptionState(true)
-            console.log("Option changed")
-        }
-        console.log("function accessed")
-    }
 
     return(
         <div className="flex justify-center h-screen items-center">
