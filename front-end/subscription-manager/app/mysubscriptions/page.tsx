@@ -74,7 +74,7 @@ export default function MySubscriptions() {
                     fakeData.filter(filter_callback).map((subscription) => {
                     let temp_index = style_index
                     style_index += 1
-                    return <MySubscriptionCard service={subscription} color={styles[temp_index % styles_length]}></MySubscriptionCard>
+                    return <MySubscriptionCard key={temp_index} service={subscription} color={styles[temp_index % styles_length]}></MySubscriptionCard>
                 })}
             </div>
         </div>
