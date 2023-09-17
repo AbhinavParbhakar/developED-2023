@@ -121,6 +121,7 @@ function AddSubscription() {
         <button type="submit" className="btn-primary input input-bordered input-info mt-4">
           Register
         </button>
+        
       </form>
     </div>
   );
