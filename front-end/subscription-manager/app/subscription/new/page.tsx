@@ -35,7 +35,6 @@ export default function addSubscription(){
                     <h2 className="label-text">Plan Type</h2>
                 </label>
                 <select name="frequency" onChange={(e) => {setOptions(e.target.value)}} className="flex select select-bordered select-primary">
-                    <option  selected disabled>Select Frequency</option>
                     <option value="weekly">Weekly</option>
                     <option value="biweekly">Bi-Weekly</option>
                     <option value="monthly">Monthly</option>
