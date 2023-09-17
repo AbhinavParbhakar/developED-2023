@@ -43,8 +43,6 @@ export default function MySubscriptions() {
         plan_name : 'gay',
     }]
 
-    //use searchParams to filter
-    const searchObject:searchObjectType  = {param:""}
     const [searchParams,setSearchParams] = useState("")
 
     //use function Filter_callback to return if filter
