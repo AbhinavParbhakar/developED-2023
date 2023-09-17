@@ -57,7 +57,7 @@ function AddSubscription() {
           <h2 className="label-text">Subscription Price</h2>
         </label>
         <input
-          type="text"
+          type="number"
           value={formData.price}
           onChange={handleInputChange}
           className="input input-bordered input-primary"
