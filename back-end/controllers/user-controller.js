@@ -1,3 +1,4 @@
+const { v4: uuid } = require('uuid');
 
 const User = require('../models/user-model');
 
@@ -30,8 +31,27 @@ const validateUser = (req, res, next) => {
 
 }
 
-const modifyUser = (req, res, next) => {
-//update the user information in the database
+const updateUser = (req, res, next) => {
+
+    const { id } = req.params;
+    const { f_name, l_name, email, passwd, b_day } = req.body;
+
+    const updatedUser = new User({
+        f_name,
+        l_name,
+        email,
+        passwd,
+        b_day
+    })
+
+    User.update(id, updatedUser, (error, data) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            res.send();
+        }
+    });
 
 }
 
@@ -42,5 +62,5 @@ const modifyUser = (req, res, next) => {
 exports.getUserData = getUserData;
 exports.createUser = createUser;
 exports.validateUser = validateUser;
-exports.modifyUser = modifyUser;
+exports.updateUser = updateUser;
 
