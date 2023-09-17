@@ -1,7 +1,6 @@
 'use client'
 
-import { redirect } from 'next/navigation'
-import React, { ReactEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 
 function AddSubscription() {
   // Define the subscription state outside of the component
