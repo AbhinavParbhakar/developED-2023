@@ -2,8 +2,9 @@
 const User = require('../models/user-model');
 
 const getUserData = (req, res, next) => {
+
     const { id } = req.params;
- 
+    
     User.getById(id, (error, data) => {
         if (error) {
             // Implement later
