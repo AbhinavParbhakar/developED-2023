@@ -15,7 +15,7 @@ export default function MySubscriptions() {
                     </button>
                 </div>
                 <Link href="/spotify">
-                    <div className="grid w-96 rounded bg-success card grid-cols-2 gap-4 hover:p-6 hover:bg-opacity-75 p-3">
+                    <div className="grid w-full rounded bg-success card grid-cols-2 gap-4 hover:p-6 hover:bg-opacity-75 p-3">
                         <div className="col-span-2">Spotify</div>
                         <div className="col-span-2 text-right">
                             <p className="text-xs">$30/mo next payment: 8 days</p>
@@ -23,12 +23,12 @@ export default function MySubscriptions() {
                     </div>
                 </Link>
 
-                <div className="grid w-96 rounded bg-error card grid-cols-2 gap-4 p-3 hover:p-6 shadow-2xl">
+                <Link href="/amazon" className="grid w-96 rounded bg-error card grid-cols-2 gap-4 p-3 hover:p-6 shadow-2xl">
                     <div className="col-span-2">Amazon Prime</div>
                     <div className="col-span-2 text-right">
-                        <p className="text-xs">next payment: 8 days</p>
+                        <p className="text-xs">$20/mo next payment: 8 days</p>
                     </div>
-                </div>
+                </Link>
                 <div className="grid w-96 rounded bg-accent card grid-cols-2 gap-4 p-3 hover:p-6 shadow-2xl">
                     <div className="col-span-2">Hulu</div>
                     <div className="col-span-2 text-right">
