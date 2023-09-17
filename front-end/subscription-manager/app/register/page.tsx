@@ -27,7 +27,7 @@ function AddSubscription() {
 
   // Define the handleSubmit function
   const handleSubmit = async (e : any) => {
-    // You can perform actions with the form data here
+    // You can perform actions with the form data here TTTTTTTTT
     e.preventDefault();
     const url = 'https://esix.ca/user'; // Replace with your API endpoint URL
     console.log(formData);
