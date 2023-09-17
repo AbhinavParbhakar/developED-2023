@@ -9,7 +9,7 @@ interface mySubscriptionProps{
 
 const MySubscriptionCard:React.FC<mySubscriptionProps> = ({service,color}) => {
     const path = "/subscription/" + service.id
-    const styles = "grid w-96 rounded card grid-cols-2 gap-4 hover:p-6 hover:bg-opacity-75 p-3 " + color
+    const styles = "grid w-96 rounded card grid-cols-2 gap-4 p-3 " + color
     return(                
     <Link href={path}>
         <div className={styles}>
