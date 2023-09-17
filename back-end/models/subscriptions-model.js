@@ -1,5 +1,8 @@
 const sql = require('./db');
 
+// IN MYSQL ADD A TRIGGER THAT ADDS PENDING EMAIL FOR SUBSCRIPTIONS ADDED THE SAME DAY THAT IS THEIR DUE DATE
+// ADD COLUMNS TO VIEW pending_emails_pretty
+
 const Subscription = function (subscription) {
     this.plan_name  = subscription.plan_name,
     this.company = subscription.company,
@@ -12,7 +15,7 @@ const Subscription = function (subscription) {
 
 Subscription.getAll = (user_id, handler) => {
     sql.query(
-        'SELECT * FROM subscriptions WHERE user_id = UUID_TO_BIN(?)',
+        'SELECT BIN_TO_UUID(sid) AS sid, plan_name, company, start_date, plan_type, cost, BIN_TO_UUID(user_id) AS user_id FROM subscriptions WHERE user_id = UUID_TO_BIN(?)',
         user_id,
         (error, results) => {
             if(error) {
@@ -27,7 +30,7 @@ Subscription.getAll = (user_id, handler) => {
 
 Subscription.getById = (sid, handler) => {
     sql.query(
-        'SELECT * FROM subscriptions WHERE sid=?',
+        'SELECT * FROM subscriptions_pretty WHERE sid = ?',
         sid,
         (error, results) => {
             if(error){
@@ -43,7 +46,7 @@ Subscription.getById = (sid, handler) => {
 Subscription.create = (sid, newSubscription, handler) => {
     console.log(newSubscription);
     sql.query(
-        'INSERT INTO subscriptions (sid, plan_name, company, start_date, plan_type, cost, user_id) VALUES (UUID_TO_BIN(?),?,?,?,?,?,UUID_TO_BIN(?))',
+        'INSERT INTO subscriptions (sid, plan_name, company, start_date, plan_type, cost, user_id) VALUES (UUID_TO_BIN(?),?,?,CAST(? AS DATE),?,?,UUID_TO_BIN(?))',
         [sid, ...Object.values(newSubscription)],
         (error, results) => {
             if(error) {

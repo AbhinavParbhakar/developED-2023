@@ -11,7 +11,7 @@ const getUserById = (req, res, next) => {
             // Implement later
         }
         else {
-            res.json({ full_name: data });
+            res.send(data);
         }
     })
 }

@@ -10,6 +10,6 @@ router.get('/', getAllSubscriptions);
 
 router.post('/', createSubscription);
 
-router.get('/:id', getSubscriptionById);
+router.get('/:sid', getSubscriptionById);
 
 module.exports = router;

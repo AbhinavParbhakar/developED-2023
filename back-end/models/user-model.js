@@ -13,7 +13,7 @@ const User = function (user) {
 User.getById = (id, handler) => {
 
     sql.query(
-        'SELECT full_name FROM users_pretty WHERE id = ?',
+        'SELECT * FROM users_pretty WHERE id = ?',
         id,
         (error, results) => {
             console.log(results);
