@@ -1,3 +1,4 @@
+const { v4: uuid } = require('uuid');
 
 const User = require('../models/user-model');
 
@@ -15,11 +16,27 @@ const getUserData = (req, res, next) => {
     })
 }
 
+
 const createUser = (req, res, next) => {
     //send the registered user data to the database
-    const {f_name, l_name, b_day, email, password} = req.body
+    const {f_name, l_name, b_day, email, passwd} = req.body
+    const newUser = new User({
+        f_name,
+        l_name,
+        b_day,
+        email,
+        passwd  
+    });
+    const id = uuid();
+    User.create(id, newUser, (error, data) => {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            res.json("User created: ", {data})
+        }
+    })
 
-    res.send('In this request we will send the registered user data to the database')
 }
 
 const validateUser = (req, res, next) => {
