@@ -79,7 +79,7 @@ export default function MySubscriptions() {
                     </button>
                 </div>
                 {
-                    fakeData.filter((data:Subscription) => data.company.includes(searchParams)).map((subscription) => {
+                    fakeData.filter(filter_callback).map((subscription) => {
                     let temp_index = style_index
                     style_index += 1
                     return <MySubscriptionCard key={temp_index} service={subscription} color={styles[temp_index % styles_length]}></MySubscriptionCard>
