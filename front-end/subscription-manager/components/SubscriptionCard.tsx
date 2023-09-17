@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react"
 import { Subscription } from "@/app/interfaces/interfaces"
+import { App } from "./SubscriptionPieChart"
 
 interface subscriptionProp{
     input: Subscription,
@@ -34,8 +35,8 @@ const SubscriptionCard:React.FC<subscriptionProp> = ({input,color}) => {
                     <option value="anually">Yearly</option>
                 </select>
             </div>
-            <div className="flex flex-row justify-between mt-8 md:mt-16">
-                <h3 className="mr-8"><p>Since:</p><strong>{input.start_date}</strong></h3>
+            <div className="flex flex-row justify-between mt-10 md:mt-16">
+                <h3 className="mb-3 md:mb-0 md:mr-8"><p>Since:</p><strong>{input.start_date}</strong></h3>
                 <h3 className=""><p>Renewal On:</p><strong>{input.due_date}</strong></h3>
             </div>
             <div className="flex flex-row justify-center">
@@ -49,6 +50,7 @@ const SubscriptionCard:React.FC<subscriptionProp> = ({input,color}) => {
                 <h2 className="md:mr-8"><strong>{input.company}</strong></h2>
                 <h3 className=""><strong>${input.cost} {input.plan_type}</strong></h3>
             </div>
+            <App input={input} color=""></App>
             <div className="flex flex-col md:flex-row justify-between md:mt-16">
                 <h3 className="md:mr-8"><p>Since:</p><strong>{input.start_date}</strong></h3>
                 <h3 className=""><p>Renewal On:</p><strong>{input.due_date}</strong></h3>
