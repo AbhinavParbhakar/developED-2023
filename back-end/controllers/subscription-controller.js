@@ -50,3 +50,4 @@ const createSubscription = (req, res, next) => {
 
 exports.getAllSubscriptions = getAllSubscriptions;
 exports.getSubscriptionById = getSubscriptionById;
+exports.createSubscription = createSubscription;
