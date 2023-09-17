@@ -25,7 +25,7 @@ Subscription.getAll = (user_id, handler) => {
     )
 }
 
-Subscription.getInfo = (sid, handler) => {
+Subscription.getById = (sid, handler) => {
     sql.query(
         'SELECT * FROM subscriptions WHERE sid=?',
         sid,
@@ -35,6 +35,21 @@ Subscription.getInfo = (sid, handler) => {
             }
             else {
                 handler(null, results);
+            }
+        }
+    )
+}
+
+Subscription.create = (sid, newSubscription, handler) => {
+    sql.query(
+        'INSERT INTO subscriptions (sid, plan_name, company, start_date, plan_type, cost, user_id) VALUES (?,?,?,?,?,?,?)',
+        [sid, ...Object.values(newSubscription)],
+        (error, results) => {
+            if(error) {
+                handler(error, null);
+            }
+            else{
+                console.log("YESIRRRRR");
             }
         }
     )

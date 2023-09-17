@@ -26,8 +26,28 @@ const getSubscriptionInfo = (req, res, next) => {
             res.json({data})
         }
     })
+}
 
+const createSubscription = (req, res, next) => {
+    const {sid, plan_name, company, start_date, plan_type, cost, user_id} = [uuid(), req.body]
+    const newSubscription = new Subscription({
+        plan_name,
+        company,
+        start_date,
+        plan_type,
+        cost,
+        user_id
+    });
+    Subscription.create(sid, newSubscription, (error, data) => {
+        if(error){
+            //implement error
+        }
+        else {
+            res.json(`Cool! Your ${company} subscription has been stored`)
+        }
+    })
 }
 
 exports.getSubscriptions = getSubscriptions;
 exports.getSubscriptionInfo = getSubscriptionInfo;
+exports.createSubscription = createSubscription;
