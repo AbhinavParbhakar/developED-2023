@@ -25,12 +25,12 @@ function AddSubscription() {
   const handleSubmit = async (e : any) => {
     // You can perform actions with the form data here
     e.preventDefault();
-    console.log( ...e);
+    console.log(formData);
   };
 
   return (
     <div className="flex justify-center h-screen items-center">
-      <form className="flex form-control shadow-2xl w-96 flex-col card p-10 bg-base-200">
+      <form onSubmit={handleSubmit} className="flex form-control shadow-2xl w-96 flex-col card p-10 bg-base-200">
         <label htmlFor="company" className="flex label">
           <h2 className="label-text">Company</h2>
         </label>
