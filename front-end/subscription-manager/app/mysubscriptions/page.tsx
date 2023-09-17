@@ -33,15 +33,23 @@ export default function MySubscriptions() {
         start_date : '02/28/3202',
         plan_type : 'monthly',
         plan_name : 'Premium',
+    },{
+        company : 'Saccer',
+        cost: 12.23,
+        id:"afdsfasdf23",
+        due_date: '05/13/2021',
+        start_date : '02/28/3202',
+        plan_type : 'weekly',
+        plan_name : 'gay',
     }]
 
     //use searchParams to filter
     const searchObject:searchObjectType  = {param:""}
-    const [searchParams,setSearchParams] = useState(searchObject)
+    const [searchParams,setSearchParams] = useState("")
 
     //use function Filter_callback to return if filter
     function filter_callback(data:Subscription){
-        if (data.company.includes(searchParams.param)){
+        if (data.company.includes(searchParams)){
             return data
         }
     }
@@ -63,7 +71,7 @@ export default function MySubscriptions() {
                 <div className="relative">
                     <input
                         type="text"
-                        onChange={(e) => {console.log(e.target.value)}}
+                        onChange={update_search}
                         placeholder="Search..."
                         className="w-full py-2 pr-10 pl-4 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                     />
@@ -71,7 +79,7 @@ export default function MySubscriptions() {
                     </button>
                 </div>
                 {
-                    fakeData.filter(filter_callback).map((subscription) => {
+                    fakeData.filter((data:Subscription) => data.company.includes(searchParams)).map((subscription) => {
                     let temp_index = style_index
                     style_index += 1
                     return <MySubscriptionCard key={temp_index} service={subscription} color={styles[temp_index % styles_length]}></MySubscriptionCard>
