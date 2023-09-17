@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const userRoutes = require('./routes/user-routes');
 
 const app = express();
@@ -12,7 +11,10 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next();
-})
+});
+
+app.use(bodyParser.json());
+
 app.use('/user', userRoutes);
 
 app.get('/', (req, res, next) => {

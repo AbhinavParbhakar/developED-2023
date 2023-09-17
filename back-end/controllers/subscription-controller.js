@@ -2,7 +2,7 @@ const { v4: uuid } = require('uuid');
 
 const Subscription = require('../models/subscriptions-model');
 
-const getSubscriptions  = (req, res, next) => {
+const getAllSubscriptions  = (req, res, next) => {
     // get all the supscriptions associated with a certain user
     const {user_id} = req.params;
     Subscription.getAll(user_id, (error, data) => {
@@ -16,7 +16,7 @@ const getSubscriptions  = (req, res, next) => {
 
 }
 // get the info for a single subscription
-const getSubscriptionInfo = (req, res, next) => {
+const getSubscriptionById = (req, res, next) => {
     const {sid} = req.params;
     Subscription.getById(sid, (error, data) => {
         if(error){
@@ -48,6 +48,11 @@ const createSubscription = (req, res, next) => {
     })
 }
 
+<<<<<<< HEAD
 exports.getSubscriptions = getSubscriptions;
 exports.getSubscriptionInfo = getSubscriptionInfo;
 exports.createSubscription = createSubscription;
+=======
+exports.getAllSubscriptions = getAllSubscriptions;
+exports.getSubscriptionById = getSubscriptionById;
+>>>>>>> refs/remotes/origin/back-end_dev

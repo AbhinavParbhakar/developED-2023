@@ -2,7 +2,7 @@ const { v4: uuid } = require('uuid');
 
 const User = require('../models/user-model');
 
-const getUserData = (req, res, next) => {
+const getUserById = (req, res, next) => {
 
     const { id } = req.params;
     
@@ -19,6 +19,7 @@ const getUserData = (req, res, next) => {
 
 const createUser = (req, res, next) => {
     //send the registered user data to the database
+    console.log('creation');
     const {f_name, l_name, b_day, email, passwd} = req.body
     const newUser = new User({
         f_name,
@@ -33,7 +34,7 @@ const createUser = (req, res, next) => {
             console.log(error);
         }
         else {
-            res.json("User created: ", {data})
+            res.json({ message: `Thanks ${f_name}, you are now signed up.` });
         }
     })
 
@@ -58,14 +59,14 @@ const updateUser = (req, res, next) => {
         email,
         passwd,
         b_day
-    })
+    });
 
     User.update(id, updatedUser, (error, data) => {
         if (error) {
             console.log(error);
         }
         else {
-            res.send();
+            res.send({ message: 'Successfully updated.' });
         }
     });
 
@@ -75,7 +76,7 @@ const updateUser = (req, res, next) => {
 
 
 
-exports.getUserData = getUserData;
+exports.getUserById = getUserById;
 exports.createUser = createUser;
 exports.validateUser = validateUser;
 exports.updateUser = updateUser;

@@ -44,14 +44,16 @@ User.update = (id, updatedUser, handler) => {
 // creates a new user in the table users
 User.create = (id, newUser, handler) => {
     sql.query(
-        'INSERT INTO TABLE users (id, f_name, l_name, email, passwd, b_day) VALUES (?, ?, ?, ?, ?)',
-        [id, ...newUser],
+        'INSERT INTO users (id, f_name, l_name, email, passwd, b_day) VALUES (UUID_TO_BIN(?), ?, ?, ?, ?, ?)',
+        [id, ...Object.values(newUser)],
         (error, results)=> {
             if(error) {
+                console.log(error);
                 handler(error, null);
             }
             else {
-                handler(null, results);
+                console.log('OKKKKKKKk');
+                handler(null, null);
             }
         }
     )
