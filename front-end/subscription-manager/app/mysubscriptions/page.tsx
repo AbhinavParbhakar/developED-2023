@@ -49,7 +49,7 @@ export default function MySubscriptions() {
 
     //use function Filter_callback to return if filter
     function filter_callback(data:Subscription){
-        if (data.company.includes(searchParams)){
+        if (data.company.toLowerCase().includes(searchParams.toLowerCase())){
             return data
         }
     }
