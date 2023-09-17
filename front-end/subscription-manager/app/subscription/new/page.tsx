@@ -14,7 +14,7 @@ export default function addSubscription(){
 
     return(
         <div className="flex justify-center h-screen items-center">
-                <form className="flex form-control w-100 shadow-2xl flex-col card p-10 bg-base-200 shadow">
+                <form className="flex form-control w-100 shadow-2xl flex-col card p-10 bg-base-200">
                     <label className="flex label">
                         <h2 className="label-text">Company</h2>
                     </label>
@@ -35,7 +35,7 @@ export default function addSubscription(){
                         <h2 className="label-text">Plan Type</h2>
                     </label>
                     <select name="frequency" onChange={(e) => {setOptions(e.target.value)}} className="flex select select-bordered select-primary">
-                        <option  selected disabled>Select Frequency</option>
+                        <option disabled>Select Frequency</option>
                         <option value="weekly">Weekly</option>
                         <option value="biweekly">Bi-Weekly</option>
                         <option value="monthly">Monthly</option>
