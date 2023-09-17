@@ -1,4 +1,5 @@
 'use client'
+
 import { redirect } from 'next/navigation'
 import React, { ReactEventHandler, useState } from 'react';
 
@@ -22,15 +23,15 @@ function AddSubscription() {
   };
 
   // Define the handleSubmit function
-  const handleSubmit = (e : React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e : any) => {
     // You can perform actions with the form data here
-    console.log("Form submitted with data:" + JSON.stringify(formData));
+    e.preventDefault();
+    console.log( ...e);
   };
 
   return (
     <div className="flex justify-center h-screen items-center">
-      <form onSubmit={handleSubmit} className="flex form-control shadow-2xl w-96 flex-col card p-10 bg-base-200">
+      <form className="flex form-control shadow-2xl w-96 flex-col card p-10 bg-base-200">
         <label htmlFor="company" className="flex label">
           <h2 className="label-text">Company</h2>
         </label>
