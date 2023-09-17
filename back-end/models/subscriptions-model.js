@@ -10,6 +10,21 @@ const Subscription = function (supscription) {
 
 }
 
+Subscription.getAll = (user_id, handler) => {
+    sql.query(
+        'SELECT * FROM subscription WHERE users_id = ?',
+        user_id,
+        (error, results) => {
+            if(error) {
+                handler(error, null);
+            }
+            else {
+                handler(null, results)
+            }
+        }
+    )
+}
+
 Subscription.getInfo = (sid, handler) => {
     sql.query(
         'SELECT * FROM subscriptions WHERE sid=?',
