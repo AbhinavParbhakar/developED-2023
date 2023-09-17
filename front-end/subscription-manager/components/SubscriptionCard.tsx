@@ -3,12 +3,13 @@ import React from "react"
 import { Subscription } from "@/app/interfaces/interfaces"
 
 interface subscriptionProp{
-    input: Subscription
+    input: Subscription,
+    color: string
 }
 
-const SubscriptionCard:React.FC<subscriptionProp> = ({input}) => {
+const SubscriptionCard:React.FC<subscriptionProp> = ({input,color}) => {
     return(
-    <div className="flex flex-col w-100 shadow-2xl card p-10 bg-base-200 justify-between">
+    <div className="flex flex-col max-w-xl shadow-2xl card p-10 bg-base-200 justify-between">
         <h2>Company:<strong>{input.company}</strong></h2>
         <h3>Plan: <strong>{input.plan_name}</strong></h3>
         <h3>Plan Type: <strong>{input.plan_type}</strong></h3>
