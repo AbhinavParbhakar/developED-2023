@@ -12,7 +12,7 @@ export default function testing(){
             }
             }>
             <label >label</label>
-            <input defaultValue="this" type="text" name="this_one" />
+            <input defaultValue="this" type="text" name="this_one" onChange={(e) => {console.log(e.target.value)}}/>
             <button type="submit">Submit</button>
         </form>
     )
