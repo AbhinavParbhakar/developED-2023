@@ -49,7 +49,7 @@ const validateUser = (req, res, next) => {
 }
 
 const updateUser = (req, res, next) => {
-
+//TODO: OPTIMIZE THIS CODE SINCE IT IS REPEATED IN CREATE USER
     const { userId: id } = req.params;
     const { f_name, l_name, email, passwd, b_day } = req.body;
 
