@@ -1,6 +1,11 @@
+'use client'
+import {useState} from 'react'
 import { Subscription } from "../interfaces/interfaces"
 import MySubscriptionCard from "@/components/MySubscriptionCard"
 
+interface searchObjectType{
+    param : string,
+}
 
 export default function MySubscriptions() {
     const fakeData : Array<Subscription> = [{
@@ -30,6 +35,21 @@ export default function MySubscriptions() {
         plan_name : 'Premium',
     }]
 
+    //use searchParams to filter
+    const searchObject:searchObjectType  = {param:""}
+    const [searchParams,setSearchParams] = useState(searchObject)
+
+    //use function Filter_callback to return if filter
+    function filter_callback(data:Subscription){
+        if (data.company.includes(searchParams.param)){
+            return data
+        }
+    }
+
+    function update_search(event:any){
+        console.log(event.target.value)
+        setSearchParams(event.target.value)
+    }
 
     //iteratively go through every styles
     var style_index:number = 0
@@ -43,13 +63,15 @@ export default function MySubscriptions() {
                 <div className="relative">
                     <input
                         type="text"
+                        onChange={(e) => {console.log(e.target.value)}}
                         placeholder="Search..."
                         className="w-full py-2 pr-10 pl-4 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                     />
                     <button className="absolute top-0 right-0 mt-2 mr-2">
                     </button>
                 </div>
-                {fakeData.map((subscription) => {
+                {
+                    fakeData.filter(filter_callback).map((subscription) => {
                     let temp_index = style_index
                     style_index += 1
                     return <MySubscriptionCard service={subscription} color={styles[temp_index % styles_length]}></MySubscriptionCard>
