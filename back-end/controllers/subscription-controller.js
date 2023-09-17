@@ -2,12 +2,12 @@ const { v4: uuid } = require('uuid');
 
 const Subscription = require('../models/subscriptions-model');
 
-const getSubscriptions  = (req, res, next) => {
+const getAllSubscriptions  = (req, res, next) => {
     // get all the supscriptions associated with a certain user
 
 }
 // get the info for a single subscription
-const getSubscriptionInfo = (req, res, next) => {
+const getSubscriptionById = (req, res, next) => {
     const {sid} = req.params;
     Subscription.getInfo(sid, (error, data) => {
         if(error){
@@ -20,5 +20,5 @@ const getSubscriptionInfo = (req, res, next) => {
 
 }
 
-exports.getSubscriptions = getSubscriptions;
-exports.getSubscriptionInfo = getSubscriptionInfo;
+exports.getAllSubscriptions = getAllSubscriptions;
+exports.getSubscriptionById = getSubscriptionById;

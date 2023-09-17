@@ -1,12 +1,14 @@
 const express = require('express');
 
-const { getUserData } = require('../controllers/user-controller');
+const { getUserById, createUser, updateUser } = require('../controllers/user-controller');
 
 const router = express.Router();
 
 
+router.get('/:id', getUserById);
 
-router.get('/:id', getUserData);
+router.post('/', createUser);
 
+router.put('/', updateUser);
 
 module.exports = router;
