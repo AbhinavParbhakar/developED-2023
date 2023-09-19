@@ -11,6 +11,7 @@ function AddSubscription() {
     email: '',
     passwd: '',
     confirmPassword: '',
+    b_day : ''
   });
 
 
