@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user-routes');
+const cors = require('cors');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/user', userRoutes);
