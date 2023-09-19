@@ -8,6 +8,7 @@ const getAllSubscriptions  = (req, res, next) => {
     const { userId: user_id } = req.params;
 
     Subscription.getAll(user_id, (error, data) => {
+
         if(error){
             //imlpement error
         }
@@ -20,7 +21,7 @@ const getAllSubscriptions  = (req, res, next) => {
 // get the info for a single subscription
 const getSubscriptionById = (req, res, next) => {
     const { sid } = req.params;
-    console.log(sid);
+
     Subscription.getById(sid, (error, data) => {
         if(error){
             //implement error
@@ -47,20 +48,20 @@ const createSubscription = (req, res, next) => {
     });
 
     Subscription.create(sid, newSubscription, (error, data) => {
-        let username = null;
+
         if(error){
             //implement error
         }
         else {
-            User.getById(user_id, (error, user_name) => {
+            User.getById(user_id, (error, data) => {
+                
                 if(error){
                     //implement error
                 }
                 else{
-                    username = user_name.f_name
+                    res.json({ message: `Alright ${data.f_name}! Your ${company} subscription has been stored` });
                 }
             })
-            res.json({ message: `Alright ${username}! Your ${company} subscription has been stored` });
         }
     })
 };
@@ -68,11 +69,7 @@ const createSubscription = (req, res, next) => {
 const updateSubscription = (req, res, next) => {
     //TODO: OPTIMIZE THIS PIECE OF CODE SINCE IT IS REPEATED IN CREATE SUBSCRIPTION
     const { plan_name, company, start_date, plan_type, cost } = req.body;
-    const { userId: user_id } = req.params;
-
-    console.log(req.params);
-
-    const sid = uuid();
+    const { userId: user_id, sid } = req.params;
 
     const newSubscription = new Subscription({
         plan_name,
@@ -83,20 +80,19 @@ const updateSubscription = (req, res, next) => {
         user_id
     });
     Subscription.update(sid, newSubscription, (error, data) => {
-        let usename = null;
         if(error){
             //implement error
         }
         else {
-            User.getById(user_id, (error, user_name) => {
+            User.getById(user_id, (error, data) => {
                 if(error){
+                    console.log(error);
                     //implement error
                 }
                 else{
-                    username = user_name.f_name
+                    res.json({ message: `Alright ${data.f_name}, your subscription has been updated` })
                 }
             })
-            res.json({message: `Alright ${usename}, your subscription has been updated`})
         }
     })
 }

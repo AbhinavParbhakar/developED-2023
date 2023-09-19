@@ -61,12 +61,12 @@ Subscription.create = (sid, newSubscription, handler) => {
 
 Subscription.update = (sid, updatedSubscription, handler) => {
     console.log(updatedSubscription);
+    console.log(sid);
     sql.query(
-        'UPDATE subscription SET plan_name=?, company=?, start_date=?, plan_type=?, cost=?, user_id=? WHERE, UUID_TO_BIN(?)',
+        'UPDATE subscriptions SET plan_name = ?, company = ?, start_date = ?, plan_type = ?, cost = ?, user_id = UUID_TO_BIN(?) WHERE sid = UUID_TO_BIN(?)',
         [...Object.values(updatedSubscription), sid],
         (error, results) => {
             if(error){
-                console.log(err);
                 handler(error, null)
             }
             else {

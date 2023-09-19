@@ -16,12 +16,12 @@ User.getById = (id, handler) => {
         'SELECT * FROM users_pretty WHERE id = ?',
         id,
         (error, results) => {
-            console.log(results);
             if (error) {
                 handler(error, null);
             }
             else {
-                handler(null, results);
+                console.log(results);
+                handler(null, results[0]);
             }
         });    
 };
