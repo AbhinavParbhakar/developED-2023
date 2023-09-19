@@ -6,10 +6,10 @@ import React, { useState } from 'react';
 function AddSubscription() {
   // Define the subscription state outside of the component
   const [formData, setFormData] = useState({
-    name: '',
+    f_name: '',
     l_name: '',
     email: '',
-    password: '',
+    passwd: '',
     confirmPassword: '',
   });
 
@@ -59,16 +59,14 @@ function AddSubscription() {
 
   return (
     <div className="flex justify-center h-screen items-center">
-      <form onSubmit={handleSubmit} className="flex form-control shadow-2xl w-96 flex-col card p-10 bg-neutral-content">
+      <form onSubmit={handleSubmit} className="flex form-control shadow-2xl w-96 flex-col card p-10 bg-base-200">
         <h1>Register to SubManager</h1>
-
-
         <label htmlFor="company" className="flex label">
           <h2 className="label-text">First Name:</h2>
         </label>
         <input
           type="text"
-          value={formData.name}
+          value={formData.f_name}
           onChange={handleInputChange}
           name="name"
           id="name"
@@ -102,7 +100,7 @@ function AddSubscription() {
         </label>
         <input
           type="password"
-          value={formData.password}
+          value={formData.passwd}
           onChange={handleInputChange}
           className="input input-bordered input-primary"
           name="password"
@@ -118,6 +116,15 @@ function AddSubscription() {
           className="input input-bordered input-primary"
           name="confirmPassword"
           id='confirmPassword'
+        />
+        <label className="flex label">
+          <h2 className="label-text">Birthdate</h2>
+        </label>
+        <input type='date'
+          className="input input-bordered input-primary"
+          name="b_day"
+          onChange={handleInputChange}
+          id='b_day'
         />
         <button type="submit" className="btn-primary input input-bordered input-info mt-4">
           Register
