@@ -1,7 +1,7 @@
 module.exports = {
-    host: 'localhost',
-    port: '3306',
+    host: 'containers-us-west-140.railway.app',
+    port: '6479',
     user: 'root',
-    password: '',
-    database: 'The_356'
+    password: 'ylkT0NLFIMh7hCNK3zpI',
+    database: 'railway'
 };
