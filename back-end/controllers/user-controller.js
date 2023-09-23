@@ -9,6 +9,7 @@ const getUserById = (req, res, next) => {
     User.getById(id, (error, data) => {
         if (error) {
             // Implement later
+            res.send(error)
         }
         else {
             res.send(data);
