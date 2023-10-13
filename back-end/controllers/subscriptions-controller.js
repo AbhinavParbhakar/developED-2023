@@ -14,8 +14,9 @@ const getAllSubscriptions  = (req, res, next) => {
             //imlpement error
         }
         else {
-            console.log(req.paramas)
+            console.log(req.params)
             console.log("recieved data")
+            console.log("sendding " + JSON.stringify({"subscriptions":data}))
             res.send({"subscriptions":data});
         }
     })

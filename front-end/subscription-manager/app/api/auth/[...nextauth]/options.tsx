@@ -11,12 +11,12 @@ export const authOptions : NextAuthOptions = {
     },
     providers:[
         GoogleProvider({
-            clientId:'291764762187-vkrbm483cbbnh5rgs374brpacnpoocn5.apps.googleusercontent.com',
-            clientSecret:'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'
+            clientId:process.env.Google_clientId as string,
+            clientSecret:process.env.Google_clientSecret as string
         }),
         GitHubProvider({
-            clientId:'d85d70e294d318266e5c',
-            clientSecret:'1f7f7c224f7aeed0cd8e053dac875e29ebccf1b3'
+            clientId:process.env.Github_clientId as string,
+            clientSecret:process.env.Github_clientSecret as string
         })
     ],
 
