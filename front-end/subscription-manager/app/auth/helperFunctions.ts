@@ -23,8 +23,8 @@ export function createUser(provider_name:string,profile:GitHubProfile|GoogleProf
         if (provider_name === "github"){
             profile = <GitHubProfile> profile
             userObject.passwd = createPassword(String(profile.id))
-            userObject.f_name =  <string> profile.name
-            userObject.l_name = <string> profile.name
+            userObject.f_name =  <string> profile.login
+            userObject.l_name = <string> profile.login
             userObject.email = <string> profile.email
         
         }else if (provider_name === "google"){
