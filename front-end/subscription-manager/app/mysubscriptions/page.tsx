@@ -11,7 +11,7 @@ interface searchObjectType{
 
 export  default async function MySubscriptions() {
     const session = await getServerSession(authOptions)
-    let response = await fetch(`http://localhost:3001/user/${session?.user.uuid}/subscriptions/`)
+    let response = await fetch(`${process.env.API}/user/${session?.user.uuid}/subscriptions/`)
 
     const fakeData : Array<Subscription> = [{
         company : 'Spotify',

@@ -36,14 +36,14 @@ export const authOptions : NextAuthOptions = {
             //console.log(newProfile)
             const requestBody : UserObject | null = createUser(provider, newProfile)
             //console.log("\n\nRequest Body:\n\n" + JSON.stringify(requestBody))
-            let response = await fetch("http://localhost:3001/user/",{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)})
+            let response = await fetch(`${process.env.API}/user/`,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)})
 
             if (response.ok){
                 const body = await response.json()
                 user.id = body.id
                 //console.log("Created user")
             }else{
-                let validate_response = await fetch("http://localhost:3001/user/validate",{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)})
+                let validate_response = await fetch(`${process.env.API}/user/validate`,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)})
                 if (validate_response.ok){
                     const new_body = await validate_response.json()
                     user.id = new_body.id
