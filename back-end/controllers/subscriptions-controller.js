@@ -9,11 +9,14 @@ const getAllSubscriptions  = (req, res, next) => {
 
     Subscription.getAll(user_id, (error, data) => {
 
+
         if(error){
             //imlpement error
         }
         else {
-            res.send(data);
+            console.log(req.paramas)
+            console.log("recieved data")
+            res.send({"subscriptions":data});
         }
     })
 

@@ -13,7 +13,7 @@ const User = function (user) {
 User.getById = (id, handler) => {
 
     sql.query(
-        'SELECT * FROM users_pretty WHERE id = ?',
+        'SELECT * FROM users WHERE id = ?',
         id,
         (error, results) => {
             if (error) {
@@ -25,6 +25,23 @@ User.getById = (id, handler) => {
             }
         });    
 };
+
+User.getByCredentials = (email,password,handler) => {
+
+    sql.query('SELECT f_name,l_name,email, passwd,b_day, bin_to_uuid(id) as id FROM users WHERE email = ? AND passwd = ?',
+    [email,password],
+    (error,results) => {
+        if (error){
+            handler(error,null)
+        }
+        else if (!results.length) {
+            handler({ kind: 'not_found' }, null);
+        }
+        else{
+            handler(null,results[0])
+        }
+    })
+}
 
 User.update = (id, updatedUser, handler) => {
     sql.query(
@@ -52,7 +69,7 @@ User.create = (id, newUser, handler) => {
                 handler(error, null);
             }
             else {
-                handler(null, null);
+                handler(null, results);
             }
         }
     )

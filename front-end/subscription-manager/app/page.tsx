@@ -1,15 +1,25 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './cardStack.module.css'
+import { authOptions } from './api/auth/[...nextauth]/options'
+import { getServerSession } from 'next-auth'
+import { Session } from 'next-auth'
+import { Subscription, subscriptionList } from './interfaces/interfaces'
 
 
-export default function Home() {
+export default async function Home() {
+  let session  = await getServerSession(authOptions)
+  console.log(session?.user.uuid)
+  let response = await fetch(`http://localhost:3001/user/${session?.user.uuid as string}/subscriptions/`,{method:'GET',headers:{'Accept': 'application/json'}})
+  console.log(JSON.stringify(response))
+  //const body:subscriptionList = await response.json()
+  //const subscriptions : Array<Subscription> = body.subscriptions
   return (
     <div>
       <div className="hero min-h-screen bg-base-200 ">
         <div className="hero-content text-center">
           <div className="max-w-md">
-            <h1 className="text-5xl font-bold">Welcome Back User</h1>
+            <h1 className="text-5xl font-bold">Welcome Back {session?.user?.name}</h1>
             <p className="text-base mt-5">Never forget about your subscriptions again!</p>
             <Link href="/subscription/new" className="btn btn-primary mt-4 mb-4">Add subscription</Link>
             <div className={styles.subs}>

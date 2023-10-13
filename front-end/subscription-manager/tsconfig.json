@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    "typeRoots": ["./types/next-auth.d.ts","./node_modules/@types",".next/types/**/*.ts"],
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",

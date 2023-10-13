@@ -20,32 +20,45 @@ const getUserById = (req, res, next) => {
 
 const createUser = (req, res, next) => {
     //send the registered user data to the database
-    console.log('creation');
-    const {f_name, l_name, b_day, email, passwd} = req.body
-    const newUser = new User({
-        f_name,
-        l_name,
-        b_day,
-        email,
-        passwd  
-    });
+    //console.log('creation');
+        const {f_name, l_name, b_day, email, passwd} = req.body
+        const newUser = new User({
+            f_name,
+            l_name,
+            b_day,
+            email,
+            passwd  
+        });
     const id = uuid();
     User.create(id, newUser, (error, data) => {
         if(error) {
-            console.log(error);
+            res.status(404).send(error)
         }
         else {
-            res.json({ message: `Thanks ${f_name}, you are now signed up.` });
+
+            res.status(200).send({"id":id})
         }
-    })
-
+    })    
 }
-
-const validateUser = (req, res, next) => {
-    // check if user matches with db
-    const {email, password} = req.body
-
-
+const validateUser = (req,res,next) => {
+        const {email, passwd} = req.body
+        User.getByCredentials(email,passwd,
+            (error,data)=>{
+                if (error){
+                    if (error.kind == 'not_found') {
+                        res.status(404).send({ message: 'User not found.' });
+                    }
+                    else {
+                        res.status(500).send({ message: 'Could not validate user. Something went wrong.' });
+                    }
+                }
+                
+                else{
+                    res.status(200).send({"id":data.id})
+                }
+        })
+    
+    
 
 }
 

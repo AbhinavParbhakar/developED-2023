@@ -1,7 +1,7 @@
 .container {
   display: block; /* Ensure it takes up the full width of the viewport */
   position: relative; /* Required for sticky children */
-  min-height: 100vh; /* Ensure the container takes up at least the full viewport height */
+  max-height: 100vh; /* Ensure the container takes up at least the full viewport height */
 }
 
 .subs{
@@ -21,8 +21,8 @@
 }
 
 .card {
-  width:500px;
-  height: 750px;
+  max-width:500px;
+  /* max-height: 750px; */
   background-color: #1D5DEC;
   color: #CBC3E3;
   border: 1px solid #ccc;
@@ -31,7 +31,7 @@
   cursor: pointer;
   border-radius: 7px;
   flex: 1;
-  overflow: hidden;
+  /* overflow: hidden; */
   transform: translateY(0);
   transition: transform 0.5s ease, width 0.5s ease;
   white-space: nowrap;

@@ -1,13 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user-routes');
-const authRoutes = require('./routes/auth-routes')
 const cors = require('cors');
-const passportSetup = require('./passport-config/passport-setup')
 
 const app = express();
 
-const LISTEN_PORT = 3000;
+
+const LISTEN_PORT = 3001;
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,15 +17,19 @@ app.use((req, res, next) => {
 
 app.use(cors());
 app.use(bodyParser.json());
+//app.use(cookieSession({
+ // maxAge : 1000 * 60 * 5,
+  //  keys : [cookie.key]
+//}))
+
 
 app.use('/user', userRoutes);
 
-app.use('/auth',authRoutes)
 
 app.get('/', (req, res, next) => {
     res.send('Backend working on root dir');
 })
 
 app.listen(LISTEN_PORT, () => {
-    console.log('Listening on port 3000');
+    console.log('Listening on port 3001');
 });

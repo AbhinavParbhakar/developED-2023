@@ -1,9 +1,16 @@
+'use client'
+
 import React from 'react';
 import Link from 'next/link';
+import {useSession} from 'next-auth/react'
+import { signOut } from 'next-auth/react';
 
 const Navbar = () => {
-  return (
-    <div className="navbar bg-base-100">
+    const {data:session,status} = useSession()
+
+
+  return (<>{!session ? (<div className='navbar bg-base-100 justify-center'><Link href="/" className="btn btn-ghost normal-case text-xl">SubManager</Link></div>):
+    (<div className="navbar bg-base-100">
         <div className="navbar-start">
             <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -26,7 +33,7 @@ const Navbar = () => {
             <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                     <div className="w-10 rounded-full">
-                    <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <img src={session?.user?.image} />
                     </div>
                 </label>
                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
@@ -37,11 +44,12 @@ const Navbar = () => {
                     </a>
                     </li>
                     <li><a>Settings</a></li>
-                    <li><a>Logout</a></li>
+                    <li onClick={() =>{signOut({callbackUrl:'/'})}}><a>Logout</a></li>
                 </ul>
             </div>
         </div>
-    </div>
+    </div>)}
+    </>
   );
 }
 

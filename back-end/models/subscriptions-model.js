@@ -53,7 +53,7 @@ Subscription.create = (sid, newSubscription, handler) => {
                 handler(error, null);
             }
             else{
-                handler(null, null);
+                handler(null, results);
             }
         }
     )

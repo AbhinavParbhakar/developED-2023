@@ -2,12 +2,17 @@
 import {useState} from 'react'
 import { Subscription } from "../interfaces/interfaces"
 import MySubscriptionCard from "@/components/MySubscriptionCard"
+import { getServerSession } from 'next-auth'
+import { authOptions } from '../api/auth/[...nextauth]/options'
 
 interface searchObjectType{
     param : string,
 }
 
-export default function MySubscriptions() {
+export  default async function MySubscriptions() {
+    const session = await getServerSession(authOptions)
+    let response = await fetch(`http://localhost:3001/user/${session?.user.uuid}/subscriptions/`)
+
     const fakeData : Array<Subscription> = [{
         company : 'Spotify',
         cost: 50.00,
