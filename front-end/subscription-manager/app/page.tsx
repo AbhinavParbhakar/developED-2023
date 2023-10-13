@@ -10,7 +10,7 @@ import { Subscription, subscriptionList } from './interfaces/interfaces'
 export default async function Home() {
   let session  = await getServerSession(authOptions)
   console.log(session?.user.uuid)
-  let response = await fetch(`http://localhost:3001/user/${session?.user.uuid as string}/subscriptions/`,{method:'GET',headers:{'Accept': 'application/json'}})
+  let response = await fetch(`${process.env.API}/user/${session?.user.uuid as string}/subscriptions/`,{method:'GET',headers:{'Accept': 'application/json'}})
   console.log(JSON.stringify(response.json()))
   //const body:subscriptionList = await response.json()
   //const subscriptions : Array<Subscription> = body.subscriptions

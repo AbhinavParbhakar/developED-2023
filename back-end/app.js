@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 
 
-const LISTEN_PORT = 8080;
+const LISTEN_PORT = process.env.PORT || 3001;
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -31,5 +31,5 @@ app.get('/', (req, res, next) => {
 })
 
 app.listen(LISTEN_PORT, () => {
-    console.log('Listening on port 3001');
+    console.log(`Listening on port ${LISTEN_PORT}`);
 });
