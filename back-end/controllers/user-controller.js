@@ -46,15 +46,15 @@ const validateUser = (req,res,next) => {
             (error,data)=>{
                 if (error){
                     if (error.kind == 'not_found') {
-                        res.status(404).send({ message: 'User not found.' });
+                        res.status(404).send(JSON.stringify({ message: 'User not found.' }));
                     }
                     else {
-                        res.status(500).send({ message: 'Could not validate user. Something went wrong.' });
+                        res.status(500).send(JSON.stringify({ message: 'Could not validate user. Something went wrong.' }));
                     }
                 }
                 
                 else{
-                    res.status(200).send({"id":data.id})
+                    res.status(200).send(JSON.stringify({"id":data.id}))
                 }
         })
     

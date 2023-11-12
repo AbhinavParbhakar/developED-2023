@@ -17,7 +17,7 @@ const getAllSubscriptions  = (req, res, next) => {
             console.log(req.params)
             console.log("recieved data")
             console.log("sendding " + JSON.stringify({"subscriptions":data}))
-            res.send({"subscriptions":data});
+            res.send(JSON.stringify({"subscriptions":data}));
         }
     })
 
@@ -31,7 +31,7 @@ const getSubscriptionById = (req, res, next) => {
             //implement error
         }
         else {
-            res.send(data);
+            res.send(JSON.stringify(data));
         }
     });
 }
