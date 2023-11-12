@@ -9,11 +9,12 @@ import { Subscription, subscriptionList } from './interfaces/interfaces'
 
 export default async function Home() {
   let session  = await getServerSession(authOptions)
-  console.log(session?.user.uuid)
+  
   let response = await fetch(`${process.env.API}/user/${session?.user.uuid as string}/subscriptions/`,{method:'GET',headers:{'Accept': 'application/json'}})
-  console.log(JSON.stringify(response.json()))
-  //const body:subscriptionList = await response.json()
-  //const subscriptions : Array<Subscription> = body.subscriptions
+  let subscriptions:subscriptionList = await response.json()
+  console.log(subscriptions)
+  
+
   return (
     <div>
       <div className="hero min-h-screen bg-base-200 ">

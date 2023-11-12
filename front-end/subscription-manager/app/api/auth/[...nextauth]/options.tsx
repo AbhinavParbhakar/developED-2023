@@ -23,6 +23,7 @@ export const authOptions : NextAuthOptions = {
     callbacks:{
       
         async signIn({ user, account, profile, email, credentials }){
+            console.log("Call back invoked")
             var provider : string = ""
             var newProfile : GitHubProfile | GoogleProfile | null = null
             
@@ -38,17 +39,19 @@ export const authOptions : NextAuthOptions = {
             //console.log("\n\nRequest Body:\n\n" + JSON.stringify(requestBody))
             let response = await fetch(`${process.env.API}/user/`,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)})
 
-            if (response.ok){
+            if (response.status == 200){
                 const body = await response.json()
                 user.id = body.id
                 //console.log("Created user")
             }else{
                 let validate_response = await fetch(`${process.env.API}/user/validate`,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)})
-                if (validate_response.ok){
+                if (validate_response.status == 200){
                     const new_body = await validate_response.json()
                     user.id = new_body.id
                     //console.log(new_body)
                     //console.log("Validated user")
+                }else{
+                    return false
                 }
             }
             return true

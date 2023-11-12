@@ -1,6 +1,6 @@
 'use client'
 import {useState} from 'react'
-import { Subscription } from "../interfaces/interfaces"
+import { Subscription, subscriptionList } from "../interfaces/interfaces"
 import MySubscriptionCard from "@/components/MySubscriptionCard"
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/options'
@@ -10,10 +10,23 @@ interface searchObjectType{
     param : string,
 }
 
-export  default function MySubscriptions() {
-    //const session = await getServerSession(authOptions)
+async function getData() {
     const {data:session,status} = useSession()
-    //let response = await fetch(`${process.env.API}/user/${session?.user.uuid}/subscriptions/`)
+    let response = await fetch(`${process.env.API}/user/${session?.user.uuid as string}/subscriptions/`,{method:'GET',headers:{'Accept': 'application/json'}})
+    let body:subscriptionList = await response.json()
+    return body.subscriptions
+}
+
+export  default async function MySubscriptions() {
+    //const session = await getServerSession(authOptions)
+    console.log("fetching data")
+    let subscriptions = await getData()
+    console.log(subscriptions)
+    //console.log(session?.user.uuid)
+    //console.log("Sending GET request")
+    //let response = await fetch(`${process.env.API}/user/${session?.user.uuid as string}/subscriptions/`,{method:'GET',headers:{'Accept': 'application/json'}})
+    //let subscriptions:Array<Subscription> = await response.json()
+    //console.log(subscriptions)
 
     const fakeData : Array<Subscription> = [{
         company : 'Spotify',
