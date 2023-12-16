@@ -1,8 +1,11 @@
 'use client'
 
+import { redirect, useRouter } from 'next/navigation';
+import { NextResponse } from 'next/server';
 import React, { useState } from 'react';
 
 function AddSubscription() {
+  const router = useRouter()
   // Define the subscription state outside of the component
   const [formData, setFormData] = useState({
     company: '',
@@ -22,10 +25,15 @@ function AddSubscription() {
   };
 
   // Define the handleSubmit function
-  const handleSubmit = async (e : any) => {
+  async function handleSubmit(e : any){
     // You can perform actions with the form data here
-    e.preventDefault();
-    console.log(formData);
+    e.preventDefault()
+    const response = await fetch("/api/user",{body:JSON.stringify(formData),method:"post"})
+    console.log(`Response status is ${response.status}`)
+    if (response.status == 200){
+      router.push('/')
+    }
+    
   };
 
   return (

@@ -31,7 +31,7 @@ export  default async function MySubscriptions() {
     const fakeData : Array<Subscription> = [{
         company : 'Spotify',
         cost: 50.00,
-        id:"adfadsfadsf",
+        user_id:"adfadsfadsf",
         due_date: '08/25/2032',
         start_date : '08/20/2021',
         plan_type : 'weekly',
@@ -39,7 +39,7 @@ export  default async function MySubscriptions() {
     },{
         company : 'Amazon Prime',
         cost: 26.21,
-        id:"fjk23j4klja",
+        user_id:"fjk23j4klja",
         due_date: '05/25/2023',
         start_date : '02/28/3202',
         plan_type : 'biweekly',
@@ -48,7 +48,7 @@ export  default async function MySubscriptions() {
     {
         company : 'Netflix',
         cost: 12.23,
-        id:"jk3l2jfklj3",
+        user_id:"jk3l2jfklj3",
         due_date: '05/13/2021',
         start_date : '02/28/3202',
         plan_type : 'monthly',
@@ -56,7 +56,7 @@ export  default async function MySubscriptions() {
     },{
         company : 'Saccer',
         cost: 12.23,
-        id:"afdsfasdf23",
+        user_id:"afdsfasdf23",
         due_date: '05/13/2021',
         start_date : '02/28/3202',
         plan_type : 'weekly',

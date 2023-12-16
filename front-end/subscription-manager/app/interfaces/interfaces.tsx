@@ -1,8 +1,9 @@
+import { DocumentData } from "firebase/firestore";
 import { Profile } from "next-auth";
 
 export interface Subscription{
     company : string,
-    id:string,
+    user_id:string,
     cost: number,
     due_date: string,
     start_date : string,
@@ -26,7 +27,7 @@ export interface GoogleProfile extends Profile{
     sub:string //id
 }
 
-export interface UserObject{
+export interface UserObject extends DocumentData{
     f_name : string,
     l_name : string,
     b_day : string | null ,
@@ -44,3 +45,12 @@ export interface Hashing{
 export interface subscriptionList{
     subscriptions : Array<Subscription>
 }
+
+export const firebaseConfig = {
+    apiKey: "AIzaSyAYbfQoJwuEweTvgDBZh43jastpDkJ_kfw",
+    authDomain: "submanage-97a70.firebaseapp.com",
+    projectId: "submanage-97a70",
+    storageBucket: "submanage-97a70.appspot.com",
+    messagingSenderId: "217045540010",
+    appId: "1:217045540010:web:b557558f67c42819d544d3"
+  };
