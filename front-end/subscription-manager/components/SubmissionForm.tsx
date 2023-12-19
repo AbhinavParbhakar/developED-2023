@@ -39,7 +39,7 @@ export default function SubscriptionForm({ session }: formType) {
     setLoading(true)
     const response = await fetch(`/api/subscription/${session?.user.email}`, { body: JSON.stringify(formData), method: "post" })
     await fetch('/api/statistics', { method: "PATCH", headers: { 'Content-type': "application/json" }, body: JSON.stringify({ 'id': session?.user.email, 'action': 0, 'value': formData.cost }) })
-    window.location.assign("http://localhost:3000" + "/mysubscriptions")
+    window.location.assign(`${process.env.NEXT_PUBLIC_API}`+ "/mysubscriptions")
 
   };
 

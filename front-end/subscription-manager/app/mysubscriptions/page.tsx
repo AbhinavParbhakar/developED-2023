@@ -6,7 +6,7 @@ import MySubscriptionSearch from "@/components/MySubscriptionSearch"
 
 export default async function MySubscriptions() {
     const session = await getServerSession(authOptions)
-    const response = await fetch(`http://localhost:3000/api/subscription/${session?.user.email}`, { method: "GET", headers: { 'Accept': 'application/json' }})
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/subscription/${session?.user.email}`, { method: "GET", headers: { 'Accept': 'application/json' }})
     const subscriptionsReturn: subscriptionApiReturnType = await response.json()
     return (
         <div className="flex justify-center h-screen mt-3">

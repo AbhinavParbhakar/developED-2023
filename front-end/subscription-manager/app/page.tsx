@@ -9,7 +9,7 @@ import { getSession } from 'next-auth/react'
 export default async function Home() {
   let session  = await getServerSession(authOptions)
   
-  let response = await fetch(`http://localhost:3000/api/subscription/${session?.user.email as string}`,{method:'GET',headers:{'Accept': 'application/json'}})
+  let response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/subscription/${session?.user.email as string}`,{method:'GET',headers:{'Accept': 'application/json'}})
  
   
 

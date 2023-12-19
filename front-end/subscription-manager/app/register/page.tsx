@@ -42,7 +42,7 @@ function AddSubscription() {
       })
       const response = await signIn('credentials-register', {data, redirect: false})
       if (response?.status == 200) {
-        window.location.assign('http://localhost:3000/')
+        window.location.assign(`${process.env.NEXT_PUBLIC_API}`)
       } else {
         setLoading(false)
         setError(true)
