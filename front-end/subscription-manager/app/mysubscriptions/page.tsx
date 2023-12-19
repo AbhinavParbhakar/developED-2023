@@ -1,110 +1,19 @@
-'use client'
-import {useState} from 'react'
-import { Subscription, subscriptionList } from "../interfaces/interfaces"
-import MySubscriptionCard from "@/components/MySubscriptionCard"
+import { Subscription, subscriptionApiReturnType } from "../interfaces/interfaces"
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/options'
-import {useSession} from 'next-auth/react'
+import MySubscriptionSearch from "@/components/MySubscriptionSearch"
 
-interface searchObjectType{
-    param : string,
-}
 
-async function getData() {
-    const {data:session,status} = useSession()
-    let response = await fetch(`${process.env.API}/user/${session?.user.uuid as string}/subscriptions/`,{method:'GET',headers:{'Accept': 'application/json'}})
-    let body:subscriptionList = await response.json()
-    return body.subscriptions
-}
-
-export  default async function MySubscriptions() {
-    //const session = await getServerSession(authOptions)
-    console.log("fetching data")
-    let subscriptions = await getData()
-    console.log(subscriptions)
-    //console.log(session?.user.uuid)
-    //console.log("Sending GET request")
-    //let response = await fetch(`${process.env.API}/user/${session?.user.uuid as string}/subscriptions/`,{method:'GET',headers:{'Accept': 'application/json'}})
-    //let subscriptions:Array<Subscription> = await response.json()
-    //console.log(subscriptions)
-
-    const fakeData : Array<Subscription> = [{
-        company : 'Spotify',
-        cost: 50.00,
-        user_id:"adfadsfadsf",
-        due_date: '08/25/2032',
-        start_date : '08/20/2021',
-        plan_type : 'weekly',
-        plan_name : 'Student Plan',
-    },{
-        company : 'Amazon Prime',
-        cost: 26.21,
-        user_id:"fjk23j4klja",
-        due_date: '05/25/2023',
-        start_date : '02/28/3202',
-        plan_type : 'biweekly',
-        plan_name : 'Music',
-    },
-    {
-        company : 'Netflix',
-        cost: 12.23,
-        user_id:"jk3l2jfklj3",
-        due_date: '05/13/2021',
-        start_date : '02/28/3202',
-        plan_type : 'monthly',
-        plan_name : 'Premium',
-    },{
-        company : 'Saccer',
-        cost: 12.23,
-        user_id:"afdsfasdf23",
-        due_date: '05/13/2021',
-        start_date : '02/28/3202',
-        plan_type : 'weekly',
-        plan_name : 'gay',
-    }]
-    
-
-    const [searchParams,setSearchParams] = useState("") //search parameters
-    
-
-    //use function Filter_callback to return if filter
-    function filter_callback(data:Subscription){
-        if (data.company.toLowerCase().includes(searchParams.toLowerCase())){
-            return data
-        }
-    }
-
-    function update_search(event:any){
-        console.log(event.target.value)
-        setSearchParams(event.target.value)
-    }
-
-    //iteratively go through every styles
-    var style_index:number = 0
-    const styles : {[key:number]:string} = {0:"bg-accent",1:"bg-info",2:"bg-success",3:"bg-warning",4:"bg-error"}
-    const styles_length = 5
-
-    return(
-        <div className="flex justify-center items-center h-screen">
+export default async function MySubscriptions() {
+    const session = await getServerSession(authOptions)
+    const response = await fetch(`http://localhost:3000/api/subscription/${session?.user.email}`, { method: "GET", headers: { 'Accept': 'application/json' }})
+    const subscriptionsReturn: subscriptionApiReturnType = await response.json()
+    return (
+        <div className="flex justify-center h-screen mt-3">
             <div className="flex flex-col space-y-4">
-                <h1 className="text-4xl font-bold text-center">My Subscriptions</h1>
-                <div className="relative">
-                    <input
-                        type="text"
-                        onChange={update_search}
-                        placeholder="Search..."
-                        className="w-full py-2 pr-10 pl-4 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                    />
-                    <button className="absolute top-0 right-0 mt-2 mr-2">
-                    </button>
-                </div>
-                {
-                    fakeData.filter(filter_callback).map((subscription) => {
-                    let temp_index = style_index
-                    style_index += 1
-                    return <MySubscriptionCard key={temp_index} service={subscription} color={styles[temp_index % styles_length]}></MySubscriptionCard>
-                })}
+                <h1 className="text-4xl font-bold text-center mb-2">My Subscriptions</h1>
+                <MySubscriptionSearch data={subscriptionsReturn.Subscriptions} />
             </div>
         </div>
-    )    
+    )
 }

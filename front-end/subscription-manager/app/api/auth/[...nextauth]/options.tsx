@@ -1,13 +1,19 @@
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from 'next-auth/providers/github';
-import { GitHubProfile,UserObject,GoogleProfile } from "@/app/interfaces/interfaces";
-import { createUser } from "@/app/auth/helperFunctions";
+import { GitHubProfile,UserObject,GoogleProfile, credentialsSignIn, credentialsRegister } from "@/app/interfaces/interfaces";
+import { createPassword, createUser } from "@/app/auth/helperFunctions";
+import CredentialsProvider from "next-auth/providers/credentials"
 
 export const authOptions : NextAuthOptions = {
     secret:process.env.NEXTAUTH_SECRET as string,
+    session:{
+        strategy:'jwt',
+        maxAge : 3 * 60 * 60 // 3 hours
+    },
     pages:{
-        signIn:'/sign-in'
+        signIn:'/sign-in',
+        error : '/sign-in'
     },
     providers:[
         GoogleProvider({
@@ -17,16 +23,54 @@ export const authOptions : NextAuthOptions = {
         GitHubProvider({
             clientId:process.env.Github_clientId as string,
             clientSecret:process.env.Github_clientSecret as string
+        }),
+        CredentialsProvider({
+            type:'credentials',
+            id:'credentials-sign-in',
+            credentials : {},
+
+            
+            async authorize(credentials, req) {
+                const updatedCredentials:credentialsSignIn = JSON.parse(req.body?.tempData)
+                const userResponse = await fetch(`${process.env.API}/api/user/${updatedCredentials.email}`,{method:"POST",body:JSON.stringify({'password':createPassword(updatedCredentials.password)}),headers:{'Content-Type':'application/json'}})
+                if (userResponse.status == 200){
+                    const user: UserObject = await userResponse.json()
+                    return user as User
+                }else{
+                    return null
+                }
+            },
+        }),
+        CredentialsProvider({
+            type:'credentials',
+            id:'credentials-register',
+            credentials : {},
+            async authorize(credentials, req) {
+                const updatedCredentials : credentialsRegister= JSON.parse(req.body?.data)
+                const response =  await fetch(`${process.env.API}/api/user`,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(createUser('creditionals',updatedCredentials))})
+                await fetch(`${process.env.API}/api/statistics`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({'email':updatedCredentials?.email})})
+                if (response.status == 200){
+                    const userResponse = await fetch(`${process.env.API}/api/user/${updatedCredentials.email}`,{method:"GET",headers:{'Content-Type':'application/json'}})
+                    const user: UserObject = await userResponse.json()
+                    return user as User
+                }else{
+                    return null
+                }
+            },
         })
     ],
 
     callbacks:{
       
         async signIn({ user, account, profile, email, credentials }){
-            console.log("Call back invoked")
+            if (profile == undefined){
+                //only triggered when Oauth2 isn't triggered meaning credentials sign-in as profile is undefined
+                //user is already created at this point, so don't try to create the account again, and simply return
+                return true
+            }
             var provider : string = ""
             var newProfile : GitHubProfile | GoogleProfile | null = null
-            
+
             if (account?.provider==="google"){
                 provider = "google"
                 newProfile = profile as GoogleProfile
@@ -34,34 +78,14 @@ export const authOptions : NextAuthOptions = {
                 provider = "github"
                 newProfile = profile as GitHubProfile
             }
-            //console.log(newProfile)
-            const requestBody : UserObject | null = createUser(provider, newProfile)
-            //console.log("\n\nRequest Body:\n\n" + JSON.stringify(requestBody))
-            let response = await fetch(`${process.env.API}/user/`,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)})
-
-            if (response.status == 200){
-                const body = await response.json()
-                user.id = body.id
-                //console.log("Created user")
-            }else{
-                let validate_response = await fetch(`${process.env.API}/user/validate`,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)})
-                if (validate_response.status == 200){
-                    const new_body = await validate_response.json()
-                    user.id = new_body.id
-                    //console.log(new_body)
-                    //console.log("Validated user")
-                }else{
-                    return false
-                }
+            const requestBody : {'name' : string, "email" : string, "passwd" : string} | null = createUser(provider, newProfile)
+            let response = await fetch(`${process.env.API}/api/user`,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)})
+            await fetch(`${process.env.API}/api/statistics`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({'email':requestBody?.email})})
+            if (response.status != 200){
+                return false
             }
             return true
         },
-        async session(params){
-            console.log("\n\n" + JSON.stringify(params) + "\n\n")
-            params.session.user.uuid = params.token.sub as string
-            return params.session
-        }
-
     }
 }
 

@@ -1,5 +1,5 @@
-import { Profile } from "next-auth"
-import { GitHubProfile, GoogleProfile,  UserObject } from "../interfaces/interfaces"
+import { Profile, User } from "next-auth"
+import { GitHubProfile, GoogleProfile,  UserObject, credentialsRegister } from "../interfaces/interfaces"
 
 const crypto = require('crypto')
 
@@ -9,30 +9,33 @@ export function createPassword(password:string){
     const min_length = process.env.min_length as unknown as number
     const max_length = process.env.max_length as unknown as number
 
-    return crypto.createHash(hash_algorithm).update(password).digest(hash_encoding).slice(min_length,max_length)
+    return crypto.createHash(hash_algorithm).update(password).digest(hash_encoding)
 
 }
 
-export function createUser(provider_name:string,profile:GitHubProfile|GoogleProfile | null) : UserObject | null{
+export function createUser(provider_name:string,profile:GitHubProfile|GoogleProfile | credentialsRegister |null) : {'name' : string, "email" : string, "passwd" : string} | null{
     const date = new Date()
     const year = date.getFullYear()
     const month = date.getMonth()
     const day = date.getDate()
-    const userObject : UserObject = {f_name : '', l_name : '', b_day:`${year}-${month}-${day}`, email : '', passwd : ''}
+    const userObject : {'name' : string, "email" : string, "passwd" : string} = {name:'', email : '', passwd : ''}
     try{
         if (provider_name === "github"){
             profile = <GitHubProfile> profile
             userObject.passwd = createPassword(String(profile.id))
-            userObject.f_name =  <string> profile.login
-            userObject.l_name = <string> profile.login
+            userObject.name =  <string> profile.login
             userObject.email = <string> profile.email
         
         }else if (provider_name === "google"){
             profile = <GoogleProfile> profile
             userObject.passwd = createPassword(profile.sub)
-            userObject.f_name = profile.given_name
-            userObject.l_name = profile.family_name
+            userObject.name = profile.name as string
             userObject.email = profile.email
+        }else{
+            profile = <credentialsRegister> profile
+            userObject.passwd = createPassword(profile?.passwd)
+            userObject.name = profile?.name as string
+            userObject.email = profile?.email as string
         }
     }catch(error){
         if (error instanceof Error){

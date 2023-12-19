@@ -1,20 +1,27 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { Firestore, collection, getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+import { initializeApp } from "firebase/app";
+import { collection, getFirestore } from "firebase/firestore";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAYbfQoJwuEweTvgDBZh43jastpDkJ_kfw",
-  authDomain: "submanage-97a70.firebaseapp.com",
-  projectId: "submanage-97a70",
-  storageBucket: "submanage-97a70.appspot.com",
-  messagingSenderId: "217045540010",
-  appId: "1:217045540010:web:b557558f67c42819d544d3"
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
+  projectId: process.env.projectId,
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId
 };
+
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
+
+
 const userCollection = collection(db,"Users")
 const subscriptionCollection = collection(db,"Subscriptions")
+const statisticsCollection = collection(db,"Statistics")
 
-export {userCollection,subscriptionCollection}
+
+export {userCollection,subscriptionCollection,db,statisticsCollection}

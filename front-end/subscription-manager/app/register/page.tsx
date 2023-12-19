@@ -3,21 +3,23 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 
 function AddSubscription() {
   // Define the subscription state outside of the component
   const [formData, setFormData] = useState({
-    f_name: '',
-    l_name: '',
-    email: '',
-    passwd: '',
+    name: '',
+    email: 'none',
+    password: '',
     confirmPassword: '',
-    b_day : ''
   });
 
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   // Define the handleInputChange function
-  const handleInputChange = (e : any) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -25,117 +27,87 @@ function AddSubscription() {
     });
   };
 
-  const router = useRouter();
 
   // Define the handleSubmit function
-  const handleSubmit = async (e : any) => {
-    // You can perform actions with the form data here TTTTTTTTT
-    e.preventDefault();
-    const url = 'https://esix.ca/user'; // Replace with your API endpoint URL
-    console.log(formData);
-
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        console.log('POST request successful');
-        router.push('/mysubscriptions');
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log('register invoked')
+    if (formData.confirmPassword == formData.password) {
+      setError(false)
+      setLoading(true)
+      const data = JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        passwd: formData.password
+      })
+      const response = await signIn('credentials-register', {data, redirect: false})
+      if (response?.status == 200) {
+        window.location.assign('http://localhost:3000/')
       } else {
-        console.error('POST request failed');
-        router.push('/mysubscriptions');
+        setLoading(false)
+        setError(true)
+        setErrorMessage("User Already exits")
       }
-    } catch (error) {
-      console.error('Error:', error);
-      router.push('/mysubscriptions');
+
+    } else {
+      setError(true)
+      setErrorMessage("Passwords don't match.")
     }
-  
-
-
-  };
+  }
 
   return (
-    <div className="flex justify-center h-screen items-center">
-      <form onSubmit={handleSubmit} className="flex form-control shadow-2xl w-96 flex-col card p-10 bg-base-200">
-        <h1>Register to SubManager</h1>
-        <label htmlFor="company" className="flex label">
-          <h2 className="label-text">First Name:</h2>
-        </label>
-        <input
-          type="text"
-          value={formData.f_name}
-          onChange={handleInputChange}
-          name="name"
-          id="name"
-          className="input input-bordered input-primary"
-        />
-        <label htmlFor="l_name" className="flex label">
-          <h2 className="label-text">Last Name:</h2>
-        </label>
-        <input
-          type="text"
-          value={formData.l_name}
-          onChange={handleInputChange}
-          className="input input-bordered input-primary"
-          name="l_name"
-          id="l_name"
-        />
-        <label className="flex label">
-          <h2 className="label-text">Email: </h2>
-        </label>
-        <input
-          type="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          className="input input-bordered input-primary"
-          name="email"
-          id='email'
-        />
-
-        <label className="flex label">
-          <h2 className="label-text">Password:</h2>
-        </label>
-        <input
-          type="password"
-          value={formData.passwd}
-          onChange={handleInputChange}
-          className="input input-bordered input-primary"
-          name="password"
-          id='password'
-        />
-        <label className="flex label">
-          <h2 className="label-text">Confirm Password:</h2>
-        </label>
-        <input
-          type="password"
-          value={formData.confirmPassword}
-          onChange={handleInputChange}
-          className="input input-bordered input-primary"
-          name="confirmPassword"
-          id='confirmPassword'
-        />
-        <label className="flex label">
-          <h2 className="label-text">Birthdate</h2>
-        </label>
-        <input type='date'
-          className="input input-bordered input-primary"
-          name="b_day"
-          onChange={handleInputChange}
-          id='b_day'
-        />
-        <button type="submit" className="btn-primary input input-bordered input-info mt-4">
-          Register
-        </button>
-        <div className="px-6 sm:px-0 max-w-sm">
-                            <button type="button" onClick={() => {signIn('google',{callbackUrl:'/'})}} className="text-white w-full  bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between dark:focus:ring-[#4285F4]/55 mr-2 mb-2"><svg className="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>Sign up with Google<div></div></button>
-                            <button type="button" onClick={() => {signIn('github',{callbackUrl:'/'})}} className="text-white w-full  bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between dark:focus:ring-[#4285F4]/55 mr-2 mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>Sign up With GitHub</button>
+    <div className="hero min-h-screen">
+      <div className="hero-content flex-col lg:flex-row">
+        <div className="text-center ml-4 lg:text-left">
+          <h2 className="text-3xl font-bold">Sign Up for SubManager</h2>
+            <p className="py-5">Never forget to cancel a subscription again!</p>
+            <p className="py-5 hidden md:block">Keep track of all your subscriptions.</p>
         </div>
-      </form>
+        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 ring-1 ring-slate-200">
+          <form className="card-body" onSubmit={(e) => { handleSubmit(e) }}>
+            <div className="form-control">
+              {error ? <label className="label justify-center">
+                <span className="label-text text-red-600">{errorMessage}</span>
+              </label> : <></>}
+              <label className="label justify-center">
+                <span className="label-text">Name</span>
+              </label>
+              <input type="text" name='name' placeholder="Jane Doe" onChange={(e) => { handleInputChange(e) }} className="input text-center input-bordered" />
+            </div>
+            <div className="form-control">
+              <label className="label justify-center">
+                <span className="label-text">Email</span>
+              </label>
+              <input type="email" name='email' placeholder="jane.doe@gmail.com" onChange={(e) => { handleInputChange(e) }} className="input text-center input-bordered" />
+            </div>
+            <div className="form-control">
+              <label className="label justify-center">
+                <span className="label-text">Password</span>
+              </label>
+              <input type="password" name='password' onChange={(e) => { handleInputChange(e) }} className="input text-center input-bordered" />
+            </div>
+            <div className="form-control">
+              <label className="label justify-center">
+                <span className="label-text">Re-enter Password</span>
+              </label>
+              <input onChange={(e) => { handleInputChange(e) }} type="password" name='confirmPassword' className="input input-bordered text-center" />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <p className="label-text-alt">Existing user? <Link href="/sign-in"><u>Sign in</u></Link></p>
+              </label>
+            </div>
+            <div className="form-control mt-3">
+              {loading ?
+                <button className="btn-primary input">
+                  <p className="animate-spin rounded-full h-6 w-6 border-t-4 border-blue-500 border-solid mx-auto"></p>
+                </button> :
+                <input className="btn-primary btn input" type='submit' placeholder='Register' />
+              }
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

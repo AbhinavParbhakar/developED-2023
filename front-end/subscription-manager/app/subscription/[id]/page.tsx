@@ -1,20 +1,17 @@
 import SubscriptionCard from "@/components/SubscriptionCard";
-import { Subscription } from "@/app/interfaces/interfaces";
+import { Subscription, statistics } from "@/app/interfaces/interfaces";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/app/api/firestore/config";
 
-export default function subscriptionCardWrapper({ params}: { params: { id: string }}){
-    const example : Subscription = {
-        company : "Spotify",
-        cost: 50.00,
-        id:"fasd2ekf2332f",
-        due_date: "10/28/2023",
-        start_date : "08/28/2001",
-        plan_type : "Yearly",
-        plan_name : "Birth",
-    }
+export default async function subscriptionCardWrapper({ params}: { params: { id: string }}){
 
+    const docReference = await getDoc(doc(db,"Subscriptions",params.id))
+    const subscription:Subscription = {...docReference.data(),"id" : docReference.id} as Subscription
+    const statisticsReferece = await getDoc(doc(db,'Statistics',subscription.user_email))
+    const statistics:statistics = await {...statisticsReferece.data(),"id" : statisticsReferece.id} as statistics
     return (
         <div className="flex justify-center h-screen items-center w-full">
-            <SubscriptionCard input={example} color=""/>
+            <SubscriptionCard input={subscription} statistics={statistics}/>
         </div>
     )
 }
