@@ -25,23 +25,44 @@ export async function PATCH(request: Request) {
     //and VALUE to add or subtract accordingly
     const response: { 'id': string, 'action': number, 'value': number } = await request.json()
     const docRef = doc(db, 'Statistics', response.id)
-    response.value = response.action ? -1 * response.value : response.value //turn negative if action : 1
-    const action = response.action ? 0 : 1
+
+    switch(response.action){
+        case 1:
+            //want to subtract
+            response.action = -1
+            response.value =  -1 * response.value
+            break;
+        case 0:
+            //want to add 
+            response.action = 1
+            break;
+        default:
+            //want to change the the value, not the total count
+            response.action = 0
+    }
     //get the doc
     const statistics = await getDoc(docRef)
     const statisticsData = statistics.data() as statistics
     const updateResponse = await updateDoc(docRef, {
-        subscriptions_count: statisticsData?.subscriptions_count + action,
+        subscriptions_count: statisticsData?.subscriptions_count + response.action,
         subscriptions_total: Number(statisticsData?.subscriptions_total) + Number(response.value)
     })
+
 
     return NextResponse.json({"message":"ok"})
 }
 
 //used to delete the subscription by email
 export async function DELETE(request: Request) {
-    const response: { 'email': string } = await request.json()
+    const response: { 'email': string ,'value':number} = await request.json()
     //get the doc
-    deleteDoc(doc(db, 'Statistics', response.email)) //id is the email
+    //set 
+    const docRef = doc(db, 'Statistics', response.email) //id is the email
+    const statistics = await getDoc(docRef)
+    const statisticsData = statistics.data() as statistics
+    const updateResponse = await updateDoc(docRef, {
+        subscriptions_count: statisticsData?.subscriptions_count - 1,
+        subscriptions_total: Number(statisticsData?.subscriptions_total) - Number(response.value)
+    })
     return NextResponse.json({"Message":"Ok"})
 }

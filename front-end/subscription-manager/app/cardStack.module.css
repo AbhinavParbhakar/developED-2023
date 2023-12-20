@@ -49,8 +49,8 @@
   display: none;
 }
 .card:hover {
-  width:500px;
-  height: 750px;
+  max-width:500px;
+  max-height: 750px;
   padding: 20px;
   display: flex;
   flex-direction: row;

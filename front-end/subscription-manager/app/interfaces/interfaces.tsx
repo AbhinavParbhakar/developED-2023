@@ -9,6 +9,7 @@ export interface Subscription{
     planType : string,
     name : string,
     user_email : string,
+    email_frequency : number
     id:string
 }
 

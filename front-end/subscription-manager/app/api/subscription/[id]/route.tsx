@@ -4,6 +4,7 @@ import { addDoc, getDocs, query, where } from "firebase/firestore";
 import { Subscription } from "@/app/interfaces/interfaces";
 import { redirect } from "next/navigation";
 
+//used to get all subscriptions for a certain user by email
 export async function GET(request:Request) {
     const urlTokens = request.url.split("/")
     const userEmail = urlTokens[urlTokens.length - 1]
@@ -18,6 +19,7 @@ export async function GET(request:Request) {
     return NextResponse.json({"Subscriptions":subscriptions})
 }
 
+//used to add a subscription to a user by email
 export async function POST(request:Request){
     const urlTokens = request.url.split("/")
     const userEmail = urlTokens[urlTokens.length - 1]

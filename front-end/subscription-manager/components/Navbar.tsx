@@ -7,7 +7,14 @@ import { signOut } from 'next-auth/react';
 
 const Navbar = () => {
     const {data:session,status} = useSession()
-    const imagePath : string = session?.user?.image as string
+
+    var imagePath : string = ""
+    if (session?.user?.image == null || session?.user?.image == undefined){
+        imagePath = 'filler_profile.png'
+    }else{
+        imagePath = session?.user?.image as string
+    }
+
 
 
   return (<>{!session ? (<div className='navbar bg-base-100 justify-center'><Link href="/" className="btn btn-ghost normal-case text-xl">SubManager</Link></div>):
@@ -19,7 +26,7 @@ const Navbar = () => {
             </label>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                 <Link href="/mysubscriptions">My Subscriptions</Link>
-                <Link href="/subscription/new" className='mt-3'>Add Subscriptions</Link>
+                <Link href="/subscription/new" className='mt-3'>Add Subscription</Link>
             </ul>
             </div>
             <Link href="/" className="btn btn-ghost normal-case text-xl">SubManager</Link>
@@ -27,7 +34,7 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">
             <Link href="/mysubscriptions" className='mr-3'>My Subscriptions</Link>
-            <Link href="/subscription/new" className='ml-3'>Add Subscriptions</Link>
+            <Link href="/subscription/new" className='ml-3'>Add Subscription</Link>
             </ul>
         </div>
         <div className="navbar-end">

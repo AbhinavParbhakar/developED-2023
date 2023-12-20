@@ -4,6 +4,7 @@ import { statistics } from "@/app/interfaces/interfaces";
 import { Session } from "next-auth";
 import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
+import { getOffsetDate } from "@/app/auth/helperFunctions";
 
 interface formType {
   "session": Session | null
@@ -14,11 +15,12 @@ export default function SubscriptionForm({ session }: formType) {
   // Define the subscription state outside of the component
   const [formData, setFormData] = useState({
     name: '',
-    startDate: '',
+    startDate: new Date().toISOString().slice(0, 10),//sets the start date as today for default
     dueDate: '',
-    planType: '',
+    planType: 'month', //due monthly as default
     cost: '',
-    user_email: ''
+    user_email: session?.user.email,
+    email_frequency: '1' //remind day before by defualt
   });
 
   const [loading, setLoading] = useState(false)
@@ -37,10 +39,26 @@ export default function SubscriptionForm({ session }: formType) {
     // You can perform actions with the form data here
     e.preventDefault()
     setLoading(true)
+
+    var offset = 0
+    switch (formData.planType) {
+      case 'month':
+        offset = 1
+        break;
+      case 'week':
+        offset = 7 //this needs to be 7 for week because we're offsetting by 7 days
+        break;
+      case 'year':
+        offset = 1
+        break;
+    }
+
+
+    formData.dueDate = getOffsetDate(formData.startDate,offset,formData.planType)
     const response = await fetch(`/api/subscription/${session?.user.email}`, { body: JSON.stringify(formData), method: "post" })
     await fetch('/api/statistics', { method: "PATCH", headers: { 'Content-type': "application/json" }, body: JSON.stringify({ 'id': session?.user.email, 'action': 0, 'value': formData.cost }) })
-    window.location.assign(`${process.env.NEXT_PUBLIC_API}`+ "/mysubscriptions")
-
+    window.location.assign(`${process.env.NEXT_PUBLIC_API}` + "/mysubscriptions")
+    console.log(JSON.stringify(formData))
   };
 
   return (
@@ -68,7 +86,22 @@ export default function SubscriptionForm({ session }: formType) {
           name="cost"
         />
         <label className="flex label">
-          <h2 className="label-text">Start Date</h2>
+          <h2 className="label-text">Notification Lead Time</h2>
+        </label>
+        <select
+          name="email_frequency"
+          value={formData.email_frequency}
+          onChange={handleInputChange}
+          className="flex select select-bordered select-primary"
+        >
+          <option value="1">Notify  1 day before due date</option>
+          <option value="2">Notify  2 days before due date</option>
+          <option value="3">Notify  3 days before due date</option>
+          <option value="4">Notify  4 days before due date</option>
+          <option value="5">Notify  5 days before due date</option>
+        </select>
+        <label className="flex label">
+          <h2 className="label-text">Last Billing Date</h2>
         </label>
         <input
           type="date"
@@ -86,10 +119,9 @@ export default function SubscriptionForm({ session }: formType) {
           onChange={handleInputChange}
           className="flex select select-bordered select-primary"
         >
-          <option value="weekly">Weekly</option>
-          <option value="biweekly">Bi-Weekly</option>
-          <option value="monthly">Monthly</option>
-          <option value="anually">Yearly</option>
+          <option value="week">Due Weekly</option>
+          <option value="month">Due Monthly</option>
+          <option value="year">Due Yearly</option>
         </select>
         {loading ?
           <button className="btn-primary input input-bordered input-info mt-4 ">
