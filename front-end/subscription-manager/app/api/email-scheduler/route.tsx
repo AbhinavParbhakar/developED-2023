@@ -132,6 +132,6 @@ export async function GET() {
 
         }
         console.log( `On ${date}, ${emailsSentCount} emails sent, ${subsUpdated} subs updated`)
-        return NextResponse.json({ 'message': `On ${date}, ${emailsSentCount} emails sent, ${subsUpdated} subs updated` })
+        return NextResponse.json({result:{ 'message': `On ${date}, ${emailsSentCount} emails sent, ${subsUpdated} subs updated` }})
     }
 }
