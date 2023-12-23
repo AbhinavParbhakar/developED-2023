@@ -12,7 +12,7 @@ export const authOptions : NextAuthOptions = {
         maxAge : 3 * 60 * 60 // 3 hours
     },
     pages:{
-        signIn:'/sign-in',
+        signIn:'/',
         error : '/sign-in'
     },
     providers:[

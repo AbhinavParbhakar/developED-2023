@@ -1,10 +1,11 @@
 'use client'
 
-import { signIn } from "next-auth/react"
+import { SignInResponse, signIn } from "next-auth/react"
 import Link from 'next/link'
 import { useSearchParams } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { UserObject, credentialsSignIn } from "../interfaces/interfaces";
+
 
 export default function Home() {
     const searchParams = useSearchParams()
@@ -15,17 +16,26 @@ export default function Home() {
         password: ""
     } as credentialsSignIn)
     const [loading, setLoading] = useState(false)
+
     async function handleSignin(method: String) {
+        var response:SignInResponse | undefined;
         if (method == 'google') {
-            await signIn('google', { callbackUrl: '/' })
+            response = await signIn('google', { callbackUrl:'/home'})
+            console.log('response returned')
         } else if (method == 'github') {
-            await signIn('github', { callbackUrl: '/' })
+            response = await signIn('github', {callbackUrl:'/home' })
         } else if (method == 'credentials') {
+            //there is a nextauth bug that won't redirect to '/sign-in' if there is a bug
+            //so don't redirect and just handle it here
             let temp = data
             const tempData = JSON.stringify(temp)
-            await signIn('credentials-sign-in', { tempData, callbackUrl: '/' })
+            response = await signIn('credentials-sign-in', { tempData, redirect:false})
+            if (response?.status != 200){
+                window.location.assign(`${process.env.NEXT_PUBLIC_API}/sign-in?error=${response?.error}`)
+            }else{
+                window.location.assign(`${process.env.NEXT_PUBLIC_API}/home`)
+            }
         }
-
     }
 
     if (error) {
@@ -38,12 +48,13 @@ export default function Home() {
         }
     }
 
-    function handleChange(e:ChangeEvent<HTMLInputElement>){
-        const {name,value} = e.target
+
+    function handleChange(e: ChangeEvent<HTMLInputElement>) {
+        const { name, value } = e.target
 
         setData({
             ...data,
-            [name] : value
+            [name]: value
         })
     }
 
@@ -64,13 +75,13 @@ export default function Home() {
                             <label className="label justify-center">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="text" placeholder="jane.doe@gmail.com" name="email" onChange={(e)=>{handleChange(e)}} className="input input-bordered text-center" />
+                            <input type="text" placeholder="jane.doe@gmail.com" name="email" onChange={(e) => { handleChange(e) }} className="input input-bordered text-center" />
                         </div>
                         <div className="form-control">
                             <label className="label justify-center">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" name="password" onChange={(e)=>{handleChange(e)}} className="input input-bordered text-center" />
+                            <input type="password" name="password" onChange={(e) => { handleChange(e) }} className="input input-bordered text-center" />
 
                             <label className="label">
 

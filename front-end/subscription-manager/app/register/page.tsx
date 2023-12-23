@@ -31,7 +31,6 @@ function AddSubscription() {
   // Define the handleSubmit function
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('register invoked')
     if (formData.confirmPassword == formData.password) {
       setError(false)
       setLoading(true)
