@@ -31,7 +31,7 @@ export default async function Home() {
                   <br /><br />Save Money.
                 </p>
                 <br></br>
-                <p className='text-[#6419e6] md:text-3xl lg:text-4xl animate-fade-secondary'><strong>We help you remember to cancel things you don't need.</strong></p>
+                <p className='text-[#6419e6] md:text-3xl lg:text-4xl animate-fade-secondary'><strong>We help you remember to cancel things you don&apos;t need.</strong></p>
               </div>
 
               <img src='/hero_banner.png' className='xl:hidden'></img>
