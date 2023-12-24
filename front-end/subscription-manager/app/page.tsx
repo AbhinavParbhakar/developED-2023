@@ -31,19 +31,20 @@ export default async function Home() {
                   <br /><br />Save Money.
                 </p>
                 <br></br>
-                <p className='text-[#6419e6] md:text-3xl lg:text-4xl animate-fade-secondary'><strong>We help you remember to cancel things you don&apos;t need.</strong></p>
+                <p className='text-[#6419e6] md:text-3xl lg:text-4xl animate-fade-secondary'><strong><b>We help you remember to cancel things you don&apos;t need.</b></strong></p>
               </div>
 
               <img src='/hero_banner.png' className='xl:hidden'></img>
               <img src='/hero_banner_lg.png' className='hidden xl:flex'></img>
             </div>
-            <div className=' md:hidden' >
+            <div className='w-full h-full flex flex-col bg-hero-small-screen drop-shadow-xl md:hidden' >
               {/**This block is used for displaying the hero and text on phone screens */}
-              <img src='/hero_banner.png' className='z-0'></img>
-              {/**Z index set to 0 for the image */}
-              <div className='z-10 flex flex-col text-left'>
-                <p>Never Forget a Sub Again</p>
-              </div>
+              <p className='font-serif pt-5 ml-2 text-white text-5xl animate-fade-primary' >
+                Never Forget a Subscription Again.
+                <br /><br />Save Money.
+              </p>
+              <br></br>
+              <p className='text-[#6419e6] text-3xl ml-2 mb-2 animate-fade-secondary'><strong>We help you remember to cancel things you don&apos;t need.</strong></p>
 
             </div>
             <div className='flex mt-6 justify-center'>
