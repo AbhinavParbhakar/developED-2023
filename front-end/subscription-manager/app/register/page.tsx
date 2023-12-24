@@ -55,7 +55,7 @@ function AddSubscription() {
   }
 
   return (
-    <div className="hero min-h-screen">
+    <div className="hero min-h-screen mb-8">
       <div className="hero-content flex-col lg:flex-row">
         <div className="text-center ml-4 lg:text-left">
           <h2 className="text-3xl font-bold">Sign Up for SubManager</h2>

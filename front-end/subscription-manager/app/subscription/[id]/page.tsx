@@ -23,7 +23,7 @@ export default async function subscriptionCardWrapper({ params }: { params: { id
     )
     const statistics: statistics = await statisticsResponse.json() as statistics
     return (
-        <div className="flex flex-col h-screen items-center w-full">
+        <div className="flex flex-col items-center w-full">
             <h1 className="text-4xl font-bold my-6">Subscription Details</h1>
             <SubscriptionCard input={subscription} statistics={statistics} />
         </div>

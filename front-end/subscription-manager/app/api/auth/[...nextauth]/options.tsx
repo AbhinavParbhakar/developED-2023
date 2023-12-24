@@ -80,8 +80,14 @@ export const authOptions : NextAuthOptions = {
             }
             const requestBody : {'name' : string, "email" : string, "passwd" : string} | null = createUser(provider, newProfile)
             let response = await fetch(`${process.env.API}/api/user`,{method:"POST",headers:{'Content-Type':'application/json'},body:JSON.stringify(requestBody)})
-            await fetch(`${process.env.API}/api/statistics`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({'email':requestBody?.email})})
-            if (response.status != 200){
+            //response status is 200 is user added, 201 if user already exists and correct username and password and 455 if user already exists but used other login method
+                        
+
+            if (response.status == 200){
+                //if status is 200, create a new entry
+                await fetch(`${process.env.API}/api/statistics`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({'email':requestBody?.email})})
+            }else if (response.status != 201){
+                //means that status is 455, or some other error, return false, user not authenticated
                 return false
             }
             return true

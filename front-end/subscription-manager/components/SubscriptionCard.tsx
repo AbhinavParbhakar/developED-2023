@@ -95,7 +95,7 @@ const SubscriptionCard: React.FC<subscriptionProp> = ({ input, statistics }) => 
     }
 
     return (
-        <div className="flex flex-col max-w-xl shadow-2xl card p-5 bg-base-200 justify-between">
+        <div className="flex flex-col max-w-xl shadow-2xl mb-8 card p-5 bg-base-200 justify-between">
             {modifyInfo ?
 
                 <div className="flex flex-col justify-between">

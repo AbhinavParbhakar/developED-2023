@@ -14,7 +14,7 @@ export default async function Home() {
 
   return (
     <div>
-      <div className="hero h-screen">
+      <div className="hero min-h-screen mb-8">
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="text-5xl font-bold">Welcome Back,</h1>

@@ -20,7 +20,7 @@ export async function POST(request:NextRequest) {
         if (response_2.empty){
             return NextResponse.json({"message" : "incorrect password"},{status : 455})
         }else{
-            return NextResponse.json({"message" : "user authenticated"},{status : 200})
+            return NextResponse.json({"message" : "user authenticated"},{status : 201})
         }
         
     }

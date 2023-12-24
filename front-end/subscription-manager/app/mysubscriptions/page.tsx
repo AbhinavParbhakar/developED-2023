@@ -11,7 +11,7 @@ export default async function MySubscriptions() {
     const subscriptionsReturn: subscriptionApiReturnType = await response.json()
     const arrayLength: number = subscriptionsReturn.Subscriptions.length
     return (
-        <div className="flex justify-center h-screen mt-3">
+        <div className="flex justify-center min-h-screen mt-3 mb-8">
             <div className="flex flex-col space-y-4">
                 <h1 className="text-4xl font-bold text-center mb-2">My Subscriptions</h1>
                 {arrayLength ?

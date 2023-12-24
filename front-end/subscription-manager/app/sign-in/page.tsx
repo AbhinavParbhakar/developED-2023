@@ -59,7 +59,7 @@ export default function Home() {
     }
 
     return (
-        <div className="hero min-h-screen">
+        <div className="hero min-h-screen mb-8">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center ml-4 lg:text-left">
                     <h2 className="text-3xl font-bold">Sign in to SubManager</h2>
