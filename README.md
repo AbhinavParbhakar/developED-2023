@@ -3,9 +3,13 @@
 
 SubsManager - Subscription Management Platform
 
+Team Lead, Full Stack:
+Abhinav Parbhakar
 
-# Front-end
+Front End Team:
+Diego Arana
+Anu Parbhakar
 
-cd front-end/subscription-manager
-npm i -D daisyui@latest
-npm run dev
+Back End Team:
+Gabriel Vasquez
+Xavier Quintanilla
